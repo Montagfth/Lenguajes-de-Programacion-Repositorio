@@ -1,0 +1,957 @@
+// Importar Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
+
+// Variables de colores según especificaciones expandidas
+:root {
+  --color-primary: #D94330;      // Rojo tomate (botones y títulos)
+  --color-primary-light: #ffebee;
+  --color-primary-dark: #b71c1c;
+  --color-accent: #4A734C;       // Verde albahaca (detalles)
+  --color-accent-light: #e8f5e8;
+  --color-background: #F9F6F1;   // Crema de masa (fondo)
+  --color-text: #333333;         // Gris oscuro (texto principal)
+  --color-success-light: #e8f8f5;
+  --color-warning-light: #fff8e1;
+  --color-danger-light: #ffebee;
+  --color-info-light: #e3f2fd;
+}
+
+// Aplicar fuentes y colores base
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+// =====================================================
+// SECCIÓN 1: HERO SECTION EXPANDIDA CON MUCHAS ANIMACIONES
+// =====================================================
+
+.hero-section {
+  height: 120vh;
+  min-height: 800px;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
+              url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+
+  // Partículas flotantes animadas
+  .floating-particles {
+    pointer-events: none;
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+
+      &.particle-1 {
+        width: 20px;
+        height: 20px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+        animation-duration: 8s;
+      }
+
+      &.particle-2 {
+        width: 15px;
+        height: 15px;
+        top: 60%;
+        left: 80%;
+        animation-delay: 2s;
+        animation-duration: 6s;
+      }
+
+      &.particle-3 {
+        width: 25px;
+        height: 25px;
+        top: 30%;
+        right: 15%;
+        animation-delay: 4s;
+        animation-duration: 10s;
+      }
+
+      &.particle-4 {
+        width: 12px;
+        height: 12px;
+        top: 80%;
+        left: 20%;
+        animation-delay: 1s;
+        animation-duration: 7s;
+      }
+
+      &.particle-5 {
+        width: 18px;
+        height: 18px;
+        top: 15%;
+        right: 40%;
+        animation-delay: 3s;
+        animation-duration: 9s;
+      }
+
+      &.particle-6 {
+        width: 22px;
+        height: 22px;
+        top: 70%;
+        right: 30%;
+        animation-delay: 5s;
+        animation-duration: 8s;
+      }
+    }
+  }
+
+  // Overlay animado
+  .animated-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(217, 67, 48, 0.15) 0%,
+      rgba(0, 0, 0, 0.6) 40%,
+      rgba(74, 115, 76, 0.15) 100%
+    );
+    animation: overlayPulse 8s ease-in-out infinite;
+  }
+
+  // Contenedor principal con animaciones
+  .hero-loaded {
+    .hero-badges {
+      animation: slideInDown 1s ease-out 0.5s both;
+    }
+
+    .brand-container {
+      animation: zoomIn 1.2s ease-out 0.8s both;
+    }
+
+    .hero-slogan {
+      animation: slideInUp 1s ease-out 1.2s both;
+    }
+
+    .hero-description-container {
+      animation: fadeInUp 1s ease-out 1.5s both;
+    }
+
+    .hero-buttons {
+      animation: bounceIn 1.2s ease-out 2s both;
+    }
+
+    .hero-quick-info {
+      animation: fadeIn 1s ease-out 2.5s both;
+    }
+  }
+
+  // Badges superiores
+  .hero-badges {
+    .badge {
+      transition: all 0.3s ease;
+      margin-bottom: 0.5rem;
+
+      &:hover {
+        transform: scale(1.1) translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  // Contenedor del nombre con efectos
+  .brand-container {
+    position: relative;
+
+    .brand-title {
+      font-family: 'Lobster', cursive !important;
+      font-size: 5.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 2;
+
+      // Efecto de brillo en el texto
+      &.text-glow {
+        text-shadow:
+          0 0 5px rgba(255, 255, 255, 0.8),
+          0 0 10px rgba(255, 255, 255, 0.6),
+          0 0 15px rgba(255, 193, 7, 0.4),
+          3px 3px 8px rgba(0, 0, 0, 0.8);
+        animation: textGlow 3s ease-in-out infinite alternate;
+      }
+
+      @media (max-width: 992px) {
+        font-size: 4rem;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 3rem;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 2.2rem;
+      }
+    }
+
+    .brand-underline {
+      width: 150px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #ffc107, transparent);
+      margin-top: 1rem;
+      animation: underlineExpand 2s ease-out 1s both;
+    }
+  }
+
+  // Eslogan con efecto typing
+  .hero-slogan {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 2rem !important;
+
+    &.typing-effect {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #ffc107;
+      animation: typing 3s steps(30, end) 1.5s both, blink-cursor 1s infinite;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem !important;
+      letter-spacing: 1px;
+    }
+  }
+
+  // Descripción expandida
+  .hero-description {
+    font-size: 1.3rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 400;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  // Características destacadas
+  .hero-features {
+    .feature-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-5px);
+      }
+
+      &.pulse-animation {
+        animation: pulseFeature 2s ease-in-out infinite;
+      }
+    }
+  }
+
+  // Botones mejorados
+  .hero-buttons {
+    .btn {
+      border-radius: 50px;
+      font-size: 1.2rem;
+      padding: 15px 35px;
+      margin: 0.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.6s ease;
+      }
+
+      &:hover::before {
+        left: 100%;
+      }
+    }
+
+    .pulse-button {
+      box-shadow: 0 0 20px rgba(217, 67, 48, 0.5);
+      animation: pulseButton 2s ease-in-out infinite;
+
+      &:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 10px 30px rgba(217, 67, 48, 0.7);
+      }
+    }
+
+    .floating-button {
+      animation: float 3s ease-in-out infinite;
+
+      &:hover {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  // Información rápida
+  .hero-quick-info {
+    .quick-info-item {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.5);
+        transform: translateY(-3px);
+      }
+
+      i {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      small {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Indicador de scroll mejorado
+  .scroll-indicator {
+    .animate-bounce-enhanced {
+      animation: bounceEnhanced 2.5s infinite;
+    }
+
+    .scroll-text {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      animation: fadeInOut 3s ease-in-out infinite;
+    }
+  }
+}
+
+// =====================================================
+// ANIMACIONES MEGA EXPANDIDAS
+// =====================================================
+
+// Animaciones de entrada
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Animaciones continuas
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulseButton {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 67, 48, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(217, 67, 48, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 67, 48, 0);
+  }
+}
+
+@keyframes pulseFeature {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+@keyframes textGlow {
+  from {
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 0.8),
+      0 0 10px rgba(255, 255, 255, 0.6),
+      0 0 15px rgba(255, 193, 7, 0.4),
+      3px 3px 8px rgba(0, 0, 0, 0.8);
+  }
+  to {
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 1),
+      0 0 20px rgba(255, 255, 255, 0.8),
+      0 0 30px rgba(255, 193, 7, 0.6),
+      3px 3px 8px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes underlineExpand {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 150px;
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-cursor {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #ffc107;
+  }
+}
+
+@keyframes overlayPulse {
+  0%, 100% {
+    background: linear-gradient(
+      135deg,
+      rgba(217, 67, 48, 0.15) 0%,
+      rgba(0, 0, 0, 0.6) 40%,
+      rgba(74, 115, 76, 0.15) 100%
+    );
+  }
+  50% {
+    background: linear-gradient(
+      135deg,
+      rgba(217, 67, 48, 0.25) 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      rgba(74, 115, 76, 0.25) 100%
+    );
+  }
+}
+
+@keyframes bounceEnhanced {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  40% {
+    transform: translateY(-15px) translateX(-50%);
+  }
+  60% {
+    transform: translateY(-8px) translateX(-50%);
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes counterUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// =====================================================
+// SECCIÓN 2: CONTACTO MEGA EXPANDIDA
+// =====================================================
+
+.contact-section {
+  background: linear-gradient(135deg, var(--color-background) 0%, #f5f5f5 50%, var(--color-background) 100%);
+  padding: 120px 0;
+  position: relative;
+
+  // Efecto de parallax sutil
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23D94330" opacity="0.1"/></svg>') repeat;
+    background-size: 50px 50px;
+    opacity: 0.3;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  // Header de la sección con animaciones
+  .section-header {
+    position: relative;
+    z-index: 2;
+
+    .section-badge {
+      .badge {
+        font-size: 1rem;
+        animation: bounceIn 1s ease-out;
+
+        &:hover {
+          transform: scale(1.1);
+          transition: all 0.3s ease;
+        }
+      }
+    }
+
+    .animate-title {
+      animation: slideInUp 1s ease-out 0.3s both;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+        border-radius: 2px;
+        animation: underlineExpand 1.5s ease-out 1s both;
+      }
+    }
+
+    .animate-subtitle {
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+  }
+
+  // Estadísticas animadas
+  .stats-container {
+    margin-bottom: 3rem;
+
+    .stat-item {
+      padding: 2rem 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(217, 67, 48, 0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+        transition: left 0.8s ease;
+      }
+
+      &:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(217, 67, 48, 0.2);
+
+        &::before {
+          left: 0;
+        }
+      }
+
+      .stat-number {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 900;
+        font-size: 2.5rem;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+
+        &.counter-animation {
+          animation: counterUp 1.5s ease-out;
+        }
+      }
+
+      .stat-label {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  // Cards de contacto mejoradas
+  .contact-cards {
+    .contact-card {
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 25px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+      border: 2px solid transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(145deg, var(--color-primary), var(--color-accent));
+        border-radius: 25px;
+        padding: 2px;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      &.hover-lift:hover {
+        transform: translateY(-15px) rotateY(5deg);
+        box-shadow:
+          0 25px 50px rgba(217, 67, 48, 0.15),
+          0 15px 35px rgba(0, 0, 0, 0.1);
+
+        &::before {
+          opacity: 1;
+        }
+      }
+
+      .contact-icon {
+        position: relative;
+
+        .icon-bg {
+          width: 80px;
+          height: 80px;
+          position: relative;
+          transition: all 0.4s ease;
+
+          &.bg-primary-light {
+            background: linear-gradient(145deg, var(--color-primary-light), #fff);
+          }
+
+          &.bg-success-light {
+            background: linear-gradient(145deg, var(--color-success-light), #fff);
+          }
+
+          &.bg-warning-light {
+            background: linear-gradient(145deg, var(--color-warning-light), #fff);
+          }
+
+          &.bg-danger-light {
+            background: linear-gradient(145deg, var(--color-danger-light), #fff);
+          }
+
+          i {
+            transition: all 0.3s ease;
+          }
+        }
+
+        &.icon-pulse {
+          animation: iconPulse 2s ease-in-out infinite;
+        }
+      }
+
+      &:hover .contact-icon .icon-bg {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+        i {
+          transform: scale(1.2);
+        }
+      }
+
+      .card-title {
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--color-text);
+      }
+
+      .card-text {
+        font-weight: 500;
+        line-height: 1.6;
+      }
+
+      .badge {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+        border-radius: 15px;
+        font-weight: 600;
+      }
+
+      // Botones mejorados
+      .btn {
+        border-radius: 25px;
+        font-weight: 700;
+        padding: 12px 25px;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0;
+          height: 0;
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: all 0.6s ease;
+        }
+
+        &:hover::before {
+          width: 300px;
+          height: 300px;
+        }
+
+        &.pulse-on-hover:hover {
+          animation: pulseButton 0.6s ease-in-out;
+        }
+      }
+    }
+  }
+
+  // Cards de horarios y métodos de pago
+  .schedule-card, .payment-card {
+    border-radius: 25px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid rgba(217, 67, 48, 0.1);
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border: none;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      }
+    }
+
+    .schedule-item, .payment-item {
+      transition: all 0.3s ease;
+      padding: 1rem 0;
+
+      &:hover {
+        background: rgba(217, 67, 48, 0.05);
+        transform: translateX(10px);
+      }
+    }
+  }
+
+  // Call to action final
+  .final-cta {
+    background: linear-gradient(135deg, rgba(217, 67, 48, 0.1) 0%, rgba(74, 115, 76, 0.1) 100%);
+    border-radius: 30px;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(217, 67, 48, 0.1) 0%, transparent 70%);
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .cta-container {
+      position: relative;
+      z-index: 2;
+    }
+
+    h3 {
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      position: relative;
+
+      &::after {
+        content: '🍕';
+        position: absolute;
+        top: -10px;
+        right: -30px;
+        font-size: 2rem;
+        animation: float 2s ease-in-out infinite;
+      }
+    }
+
+    .animated-button {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 50px;
+      padding: 15px 35px;
+      font-weight: 700;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transition: left 0.8s ease;
+      }
+
+      &:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &:active {
+        transform: translateY(-2px) scale(1.02);
+      }
+    }
+  }
+}// =====================================================
+// RESPONSIVE DESIGN
+// =====================================================
+
+@media (max-width: 992px) {
+  .hero-section {
+    .brand-title {
+      font-size: 3rem;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 60px 0;
+  }
+
+  .hero-section {
+    .btn-primary {
+      font-size: 1rem;
+      padding: 12px 30px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    .hero-description {
+      font-size: 1rem;
+      padding: 0 15px;
+    }
+  }
+}

@@ -1,0 +1,179 @@
+// Variables
+$primary-color: #D94330;      // Rojo tomate
+$secondary-color: #2C3E50;    // Azul oscuro
+$accent-color: #F1C40F;       // Amarillo queso
+$dark-bg: #1a1a2e;
+$card-bg: rgba(255, 255, 255, 0.9);
+$glass-bg: rgba(255, 255, 255, 0.1);
+$glass-border: rgba(255, 255, 255, 0.2);
+
+.catalogo-container {
+  background-color: #F9F6F1; // Crema de masa
+  min-height: 100vh;
+  background-image: radial-gradient(#e9ecef 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.title-font {
+  font-family: 'Dancing Script', cursive;
+  color: $primary-color;
+}
+
+// Search Bar
+.search-wrapper {
+  max-width: 600px;
+
+  .input-group {
+    border-radius: 50px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid rgba($primary-color, 0.1);
+
+    &:focus-within {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(217, 67, 48, 0.15) !important;
+      border-color: $primary-color;
+    }
+
+    .input-group-text {
+      padding-left: 1.5rem;
+      background: white;
+    }
+
+    input {
+      padding-right: 1.5rem;
+      height: 3.5rem;
+      font-size: 1.1rem;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// Product Cards
+.product-card {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background: white;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+
+    .card-img-top i {
+      transform: scale(1.2) rotate(10deg);
+      color: $primary-color !important;
+      opacity: 1 !important;
+    }
+  }
+
+  .card-img-top {
+    transition: background-color 0.3s ease;
+    background-color: #fff5f5 !important; // Light red bg
+
+    i {
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      color: $primary-color;
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .btn-primary {
+    background: $primary-color;
+    border: none;
+    padding: 0.6rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(217, 67, 48, 0.4);
+      background: darken($primary-color, 5%);
+    }
+
+    &:disabled {
+      background: #e9ecef;
+      color: #adb5bd;
+    }
+  }
+}
+
+// Floating Cart Button
+.cart-float-btn {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $primary-color;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(217, 67, 48, 0.4) !important;
+
+  &:hover {
+    transform: scale(1.1) rotate(-10deg);
+    background: darken($primary-color, 5%);
+  }
+
+  .badge {
+    font-size: 0.8rem;
+    padding: 0.5em 0.7em;
+    background-color: $accent-color !important;
+    color: $secondary-color;
+  }
+}
+
+// Animations
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+  opacity: 0;
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 2.5rem;
+  }
+
+  .cart-float-btn {
+    width: 60px;
+    height: 60px;
+
+    i {
+      font-size: 1.2rem;
+    }
+  }
+}

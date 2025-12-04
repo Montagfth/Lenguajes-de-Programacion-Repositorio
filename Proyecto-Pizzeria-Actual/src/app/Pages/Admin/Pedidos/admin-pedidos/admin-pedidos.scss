@@ -1,0 +1,41 @@
+// Tabla
+.table {
+  th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    color: #495057;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(13, 110, 253, 0.05);
+    }
+  }
+}
+
+// Badges
+.badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+  text-transform: capitalize;
+}
+
+// Spinner
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+// Iconos
+.bi {
+  vertical-align: middle;
+}

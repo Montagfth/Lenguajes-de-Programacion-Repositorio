@@ -1,0 +1,114 @@
+// =====================================================
+// CLASES DE UTILIDAD Y COLORES PERSONALIZADOS
+// =====================================================
+
+.bg-primary-light { background-color: var(--color-primary-light) !important; }
+.bg-success-light { background-color: var(--color-success-light) !important; }
+.bg-warning-light { background-color: var(--color-warning-light) !important; }
+.bg-danger-light { background-color: var(--color-danger-light) !important; }
+.bg-info-light { background-color: var(--color-info-light) !important; }
+
+.text-accent { color: var(--color-accent) !important; }
+
+// Efectos de botones globales
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border: none;
+
+  &:hover, &:focus, &:active {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    box-shadow: 0 8px 25px rgba(217, 67, 48, 0.4);
+  }
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+
+  &:hover, &:focus, &:active {
+    background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+  }
+}
+
+// =====================================================
+// RESPONSIVE DESIGN MEGA MEJORADO
+// =====================================================
+
+// Large devices (992px and up)
+@media (max-width: 1199.98px) {
+  .hero-section {
+    .brand-title {
+      font-size: 4.5rem;
+    }
+  }
+}
+
+// Medium devices (768px and up)
+@media (max-width: 991.98px) {
+  .hero-section {
+    height: 100vh;
+
+    .brand-title {
+      font-size: 3.5rem;
+    }
+
+    .hero-slogan {
+      font-size: 1.6rem !important;
+    }
+  }
+
+  .contact-section {
+    padding: 80px 0;
+
+    .section-title {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+// Small devices (576px and up)
+@media (max-width: 767.98px) {
+  .hero-section {
+    .brand-title {
+      font-size: 2.8rem;
+    }
+
+    .hero-slogan {
+      font-size: 1.3rem !important;
+    }
+
+    .hero-buttons {
+      .btn {
+        display: block;
+        width: 80%;
+        margin: 0.5rem auto;
+      }
+    }
+  }
+
+  .contact-section {
+    padding: 60px 0;
+
+    .section-title {
+      font-size: 2rem;
+    }
+  }
+}
+
+// Extra small devices (less than 576px)
+@media (max-width: 575.98px) {
+  .hero-section {
+    .brand-title {
+      font-size: 2.2rem;
+    }
+
+    .hero-slogan {
+      font-size: 1.1rem !important;
+    }
+  }
+}
+
+// Scroll suave
+html {
+  scroll-behavior: smooth;
+}

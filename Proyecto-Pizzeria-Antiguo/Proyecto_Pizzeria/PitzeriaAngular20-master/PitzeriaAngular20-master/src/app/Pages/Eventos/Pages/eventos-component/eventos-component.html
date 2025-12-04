@@ -1,0 +1,531 @@
+<!-- Página de Eventos - Pizzería Deliziosa -->
+
+<!-- Hero Section de Eventos -->
+<section class="events-hero d-flex align-items-center justify-content-center text-center text-white position-relative">
+  <!-- Overlay -->
+  <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+  <!-- Contenido del hero -->
+  <div class="container position-relative z-3" [class.hero-loaded]="isLoaded()">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h1 class="hero-title display-2 fw-bold mb-4 text-glow">
+          Eventos Especiales
+        </h1>
+        <p class="hero-subtitle lead mb-4">
+          Celebra los momentos más importantes de tu vida en Pizzería Deliziosa.<br>
+          <strong class="text-warning">¡Hacemos de cada ocasión una experiencia inolvidable!</strong>
+        </p>
+
+        <!-- Estadísticas rápidas -->
+        <div class="hero-stats row g-3 justify-content-center">
+          <div class="col-auto">
+            <div class="stat-card">
+              <div class="stat-number h2 fw-bold text-warning">{{ eventosDisponibles() }}</div>
+              <div class="stat-label">Eventos Disponibles</div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="stat-card">
+              <div class="stat-number h2 fw-bold text-success">150+</div>
+              <div class="stat-label">Eventos Realizados</div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="stat-card">
+              <div class="stat-number h2 fw-bold text-info">50</div>
+              <div class="stat-label">Personas Máx.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator position-absolute bottom-0 start-50 translate-middle-x mb-4">
+    <i class="bi bi-chevron-down text-white fs-2 animate-bounce"></i>
+  </div>
+</section>
+
+<!-- Sección de Eventos Destacados -->
+<section class="featured-events py-5 bg-light">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title display-4 fw-bold text-primary mb-3">
+        <i class="bi bi-stars me-3"></i>
+        Eventos Destacados
+      </h2>
+      <p class="lead text-muted">
+        Los eventos más populares y especiales que tenemos para ti
+      </p>
+    </div>
+
+    <!-- Carrusel de eventos destacados -->
+    <div class="row g-4">
+      @for (evento of eventosDestacados(); track evento.id) {
+        <div class="col-lg-4 col-md-6">
+          <div class="featured-event-card card border-0 shadow-lg h-100">
+            <!-- Imagen del evento -->
+            <div class="event-image position-relative overflow-hidden">
+              <img [src]="evento.imagen" [alt]="evento.titulo" class="card-img-top">
+              <div class="event-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                <button class="btn btn-light btn-lg rounded-circle shadow" (click)="seleccionarEvento(evento)">
+                  <i class="bi bi-eye fs-4"></i>
+                </button>
+              </div>
+              <div class="event-badge position-absolute top-0 end-0 m-3">
+                <span class="badge bg-danger px-3 py-2 rounded-pill">
+                  <i class="bi bi-star-fill me-1"></i>
+                  Destacado
+                </span>
+              </div>
+              @if (!evento.disponible) {
+                <div class="sold-out-badge position-absolute bottom-0 start-0 end-0">
+                  <div class="bg-dark bg-opacity-75 text-white text-center py-2 fw-bold">
+                    <i class="bi bi-x-circle me-2"></i>
+                    AGOTADO
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Contenido de la card -->
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="badge rounded-pill"
+                      [class]="'bg-' + getColorCategoria(evento.categoria)">
+                  <i [class]="getIconoCategoria(evento.categoria) + ' me-1'"></i>
+                  {{ evento.categoria | titlecase }}
+                </span>
+                <div class="text-end">
+                  <div class="price h5 fw-bold text-primary mb-0">S/. {{ evento.precio }}</div>
+                  <small class="text-muted">por persona</small>
+                </div>
+              </div>
+
+              <h3 class="card-title h5 fw-bold mb-3">{{ evento.titulo }}</h3>
+              <p class="card-text text-muted mb-3">{{ evento.descripcion }}</p>
+
+              <!-- Información del evento -->
+              <div class="event-info mb-3">
+                <div class="info-item d-flex align-items-center mb-2">
+                  <i class="bi bi-calendar-event text-primary me-2"></i>
+                  <span class="fw-semibold">{{ formatearFecha(evento.fecha) }}</span>
+                </div>
+                <div class="info-item d-flex align-items-center mb-2">
+                  <i class="bi bi-clock text-primary me-2"></i>
+                  <span>{{ evento.hora }}</span>
+                </div>
+                <div class="info-item d-flex align-items-center">
+                  <i class="bi bi-people text-primary me-2"></i>
+                  <span>Hasta {{ evento.capacidad }} personas</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer de la card -->
+            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+              <div class="d-grid gap-2">
+                <button
+                  class="btn btn-primary fw-semibold"
+                  [disabled]="!evento.disponible"
+                  (click)="reservarEvento(evento)">
+                  @if (evento.disponible) {
+                    <i class="bi bi-whatsapp me-2"></i>
+                    Reservar Ahora
+                  } @else {
+                    <i class="bi bi-x-circle me-2"></i>
+                    No Disponible
+                  }
+                </button>
+                <button class="btn btn-outline-secondary" (click)="seleccionarEvento(evento)">
+                  <i class="bi bi-info-circle me-2"></i>
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Sección Principal de Eventos -->
+<section class="main-events py-5">
+  <div class="container">
+
+    <!-- Filtros -->
+    <div class="events-filters mb-5">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h2 class="section-title h3 fw-bold text-primary mb-md-0">
+            Todos Nuestros Eventos
+          </h2>
+        </div>
+        <div class="col-md-6">
+          <div class="filter-buttons text-md-end">
+            <div class="btn-group" role="group">
+              <button
+                type="button"
+                class="btn fw-semibold"
+                [class]="filtroActivo() === 'todos' ? 'btn-primary' : 'btn-outline-primary'"
+                (click)="setFiltro('todos')">
+                <i class="bi bi-grid-3x3-gap me-1"></i>
+                Todos
+              </button>
+              <button
+                type="button"
+                class="btn fw-semibold"
+                [class]="filtroActivo() === 'disponibles' ? 'btn-success' : 'btn-outline-success'"
+                (click)="setFiltro('disponibles')">
+                <i class="bi bi-check-circle me-1"></i>
+                Disponibles
+              </button>
+              <button
+                type="button"
+                class="btn fw-semibold"
+                [class]="filtroActivo() === 'cumpleanos' ? 'btn-warning' : 'btn-outline-warning'"
+                (click)="setFiltro('cumpleanos')">
+                <i class="bi bi-gift me-1"></i>
+                Cumpleaños
+              </button>
+              <button
+                type="button"
+                class="btn fw-semibold"
+                [class]="filtroActivo() === 'corporativo' ? 'btn-info' : 'btn-outline-info'"
+                (click)="setFiltro('corporativo')">
+                <i class="bi bi-briefcase me-1"></i>
+                Corporativo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de eventos -->
+    <div class="events-grid">
+      <div class="row g-4">
+        @for (evento of eventosFiltrados(); track evento.id) {
+          <div class="col-lg-6 col-xl-4">
+            <div class="event-card card border-0 shadow h-100 position-relative">
+
+              <!-- Imagen -->
+              <div class="event-image-container position-relative overflow-hidden">
+                <img [src]="evento.imagen" [alt]="evento.titulo" class="card-img-top event-image">
+
+                <!-- Overlay con información -->
+                <div class="event-quick-info position-absolute bottom-0 start-0 end-0 p-3">
+                  <div class="d-flex justify-content-between align-items-end">
+                    <div class="event-date bg-white rounded-3 p-2 text-center">
+                      <div class="date-day h6 fw-bold mb-0 text-primary">{{ evento.fecha.split('-')[2] }}</div>
+                      <div class="date-month small text-muted">DIC</div>
+                    </div>
+                    <div class="event-price bg-primary text-white rounded-3 p-2">
+                      <div class="price-amount fw-bold">S/. {{ evento.precio }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                @if (!evento.disponible) {
+                  <div class="unavailable-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50">
+                    <div class="text-center text-white">
+                      <i class="bi bi-x-circle-fill fs-1 mb-2"></i>
+                      <div class="fw-bold">AGOTADO</div>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <!-- Contenido -->
+              <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="badge rounded-pill"
+                        [class]="'bg-' + getColorCategoria(evento.categoria)">
+                    <i [class]="getIconoCategoria(evento.categoria) + ' me-1'"></i>
+                    {{ evento.categoria | titlecase }}
+                  </span>
+                  @if (evento.destacado) {
+                    <span class="badge bg-warning text-dark rounded-pill">
+                      <i class="bi bi-star-fill me-1"></i>
+                      Popular
+                    </span>
+                  }
+                </div>
+
+                <h3 class="card-title h5 fw-bold mb-2">{{ evento.titulo }}</h3>
+                <p class="card-text text-muted mb-3">{{ evento.descripcion }}</p>
+
+                <!-- Detalles del evento -->
+                <div class="event-details mb-3">
+                  <div class="detail-row d-flex align-items-center mb-1">
+                    <i class="bi bi-calendar3 text-muted me-2"></i>
+                    <small class="text-muted">{{ formatearFecha(evento.fecha) }}</small>
+                  </div>
+                  <div class="detail-row d-flex align-items-center mb-1">
+                    <i class="bi bi-clock text-muted me-2"></i>
+                    <small class="text-muted">{{ evento.hora }}</small>
+                  </div>
+                  <div class="detail-row d-flex align-items-center">
+                    <i class="bi bi-people text-muted me-2"></i>
+                    <small class="text-muted">{{ evento.capacidad }} personas máximo</small>
+                  </div>
+                </div>
+
+                <!-- Incluye (primeros 3 items) -->
+                <div class="includes-preview mb-3">
+                  <h6 class="fw-bold mb-2">
+                    <i class="bi bi-check-circle text-success me-2"></i>
+                    Incluye:
+                  </h6>
+                  <ul class="list-unstyled mb-0">
+                    @for (item of evento.incluye.slice(0, 3); track item) {
+                      <li class="small text-muted mb-1">
+                        <i class="bi bi-dot"></i>
+                        {{ item }}
+                      </li>
+                    }
+                    @if (evento.incluye.length > 3) {
+                      <li class="small text-primary">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        +{{ evento.incluye.length - 3 }} más...
+                      </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                <div class="d-grid gap-2">
+                  @if (evento.disponible) {
+                    <button class="btn btn-primary fw-semibold" (click)="reservarEvento(evento)">
+                      <i class="bi bi-whatsapp me-2"></i>
+                      Reservar por WhatsApp
+                    </button>
+                  } @else {
+                    <button class="btn btn-secondary fw-semibold" disabled>
+                      <i class="bi bi-x-circle me-2"></i>
+                      No Disponible
+                    </button>
+                  }
+                  <button class="btn btn-outline-primary" (click)="seleccionarEvento(evento)">
+                    <i class="bi bi-eye me-2"></i>
+                    Ver Detalles Completos
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Mensaje cuando no hay eventos -->
+      @if (eventosFiltrados().length === 0) {
+        <div class="no-events text-center py-5">
+          <i class="bi bi-calendar-x text-muted" style="font-size: 4rem;"></i>
+          <h3 class="h4 text-muted mt-3">No hay eventos disponibles</h3>
+          <p class="text-muted">Para este filtro no encontramos eventos disponibles.</p>
+          <button class="btn btn-primary" (click)="setFiltro('todos')">
+            <i class="bi bi-grid-3x3-gap me-2"></i>
+            Ver Todos los Eventos
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Modal de Detalles del Evento -->
+@if (eventoSeleccionado()) {
+  <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content shadow-lg border-0 rounded-4">
+
+        <!-- Header del modal -->
+        <div class="modal-header border-0 pb-0">
+          <div class="d-flex align-items-center">
+            <span class="badge rounded-pill me-3"
+                  [class]="'bg-' + getColorCategoria(eventoSeleccionado()!.categoria)">
+              <i [class]="getIconoCategoria(eventoSeleccionado()!.categoria) + ' me-1'"></i>
+              {{ eventoSeleccionado()!.categoria | titlecase }}
+            </span>
+            @if (eventoSeleccionado()!.destacado) {
+              <span class="badge bg-warning text-dark rounded-pill">
+                <i class="bi bi-star-fill me-1"></i>
+                Destacado
+              </span>
+            }
+          </div>
+          <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+        </div>
+
+        <!-- Imagen del evento -->
+        <div class="modal-image position-relative">
+          <img [src]="eventoSeleccionado()!.imagen"
+               [alt]="eventoSeleccionado()!.titulo"
+               class="w-100"
+               style="height: 250px; object-fit: cover;">
+          @if (!eventoSeleccionado()!.disponible) {
+            <div class="position-absolute top-50 start-50 translate-middle">
+              <div class="bg-danger text-white px-4 py-2 rounded-pill fw-bold">
+                <i class="bi bi-x-circle-fill me-2"></i>
+                EVENTO AGOTADO
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Cuerpo del modal -->
+        <div class="modal-body p-4">
+          <div class="row g-4">
+
+            <!-- Información principal -->
+            <div class="col-md-8">
+              <h2 class="modal-title h3 fw-bold text-primary mb-3">
+                {{ eventoSeleccionado()!.titulo }}
+              </h2>
+
+              <p class="lead mb-4">{{ eventoSeleccionado()!.descripcion }}</p>
+
+              <!-- Detalles del evento -->
+              <div class="event-details-full mb-4">
+                <h5 class="fw-bold mb-3">
+                  <i class="bi bi-info-circle text-primary me-2"></i>
+                  Detalles del Evento
+                </h5>
+
+                <div class="row g-3">
+                  <div class="col-sm-6">
+                    <div class="detail-card p-3 bg-light rounded-3">
+                      <i class="bi bi-calendar-event text-primary fs-5 mb-2"></i>
+                      <div class="fw-semibold">Fecha</div>
+                      <div class="text-muted">{{ formatearFecha(eventoSeleccionado()!.fecha) }}</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="detail-card p-3 bg-light rounded-3">
+                      <i class="bi bi-clock text-primary fs-5 mb-2"></i>
+                      <div class="fw-semibold">Hora</div>
+                      <div class="text-muted">{{ eventoSeleccionado()!.hora }}</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="detail-card p-3 bg-light rounded-3">
+                      <i class="bi bi-people text-primary fs-5 mb-2"></i>
+                      <div class="fw-semibold">Capacidad</div>
+                      <div class="text-muted">{{ eventoSeleccionado()!.capacidad }} personas</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="detail-card p-3 bg-light rounded-3">
+                      <i class="bi bi-currency-dollar text-primary fs-5 mb-2"></i>
+                      <div class="fw-semibold">Precio</div>
+                      <div class="text-success fw-bold">S/. {{ eventoSeleccionado()!.precio }} por persona</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lo que incluye -->
+              <div class="includes-full mb-4">
+                <h5 class="fw-bold mb-3">
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                  ¿Qué incluye este evento?
+                </h5>
+                <div class="row">
+                  @for (item of eventoSeleccionado()!.incluye; track item) {
+                    <div class="col-md-6 mb-2">
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <span>{{ item }}</span>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel lateral -->
+            <div class="col-md-4">
+              <div class="booking-panel bg-primary bg-opacity-10 rounded-4 p-4">
+                <h5 class="fw-bold text-primary mb-3">
+                  <i class="bi bi-calendar-check me-2"></i>
+                  Reserva tu Evento
+                </h5>
+
+                <div class="price-summary mb-3 p-3 bg-white rounded-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold">Precio por persona:</span>
+                    <span class="h5 fw-bold text-primary mb-0">S/. {{ eventoSeleccionado()!.precio }}</span>
+                  </div>
+                </div>
+
+                @if (eventoSeleccionado()!.disponible) {
+                  <div class="availability mb-3 p-3 bg-success bg-opacity-10 rounded-3">
+                    <div class="d-flex align-items-center text-success">
+                      <i class="bi bi-check-circle-fill me-2"></i>
+                      <span class="fw-semibold">Disponible para reservar</span>
+                    </div>
+                  </div>
+
+                  <div class="d-grid gap-2">
+                    <button class="btn btn-primary btn-lg fw-semibold" (click)="reservarEvento(eventoSeleccionado()!)">
+                      <i class="bi bi-whatsapp me-2"></i>
+                      Reservar por WhatsApp
+                    </button>
+                    <button class="btn btn-outline-primary" onclick="window.location.href='tel:+51987654321'">
+                      <i class="bi bi-telephone me-2"></i>
+                      Llamar Ahora
+                    </button>
+                  </div>
+                } @else {
+                  <div class="unavailable mb-3 p-3 bg-danger bg-opacity-10 rounded-3">
+                    <div class="d-flex align-items-center text-danger">
+                      <i class="bi bi-x-circle-fill me-2"></i>
+                      <span class="fw-semibold">Evento agotado</span>
+                    </div>
+                  </div>
+
+                  <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>¿Te interesa este evento?</strong><br>
+                    Contáctanos para eventos similares o futuras fechas.
+                  </div>
+                }
+
+                <!-- Información adicional -->
+                <div class="additional-info mt-4">
+                  <h6 class="fw-bold mb-2">
+                    <i class="bi bi-info-circle text-info me-2"></i>
+                    Información Importante
+                  </h6>
+                  <ul class="list-unstyled small text-muted">
+                    <li class="mb-1">
+                      <i class="bi bi-dot"></i>
+                      Reserva mínimo con 48h de anticipación
+                    </li>
+                    <li class="mb-1">
+                      <i class="bi bi-dot"></i>
+                      Seña del 50% para confirmar
+                    </li>
+                    <li class="mb-1">
+                      <i class="bi bi-dot"></i>
+                      Políticas de cancelación flexibles
+                    </li>
+                    <li>
+                      <i class="bi bi-dot"></i>
+                      Decoración personalizable
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

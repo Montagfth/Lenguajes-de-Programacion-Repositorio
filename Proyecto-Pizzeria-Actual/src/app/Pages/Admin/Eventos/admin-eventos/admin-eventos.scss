@@ -1,0 +1,74 @@
+// Modal backdrop
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.show {
+  z-index: 1050;
+}
+
+// Tabla
+.table {
+  th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    color: #495057;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(13, 110, 253, 0.05);
+    }
+  }
+}
+
+// Badges
+.badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+  text-transform: capitalize;
+}
+
+// Botones
+.btn-group-sm > .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+// Formulario
+.form-label {
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+// Spinner
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+// Iconos
+.bi {
+  vertical-align: middle;
+}

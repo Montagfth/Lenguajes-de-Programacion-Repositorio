@@ -1,0 +1,196 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2 fw-bold text-primary mb-3">
+        <i class="bi bi-receipt"></i> Gestión de Pedidos
+      </h1>
+      <p class="text-muted">Todos los pedidos del sistema</p>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row g-3 mb-4">
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-receipt fs-3 text-primary"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Total Pedidos</h6>
+              <h3 class="mb-0 fw-bold">{{ totalPedidos() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-clock-history fs-3 text-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Pendientes</h6>
+              <h3 class="mb-0 fw-bold text-warning">{{ pedidosPendientes() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-info bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-arrow-repeat fs-3 text-info"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">En Proceso</h6>
+              <h3 class="mb-0 fw-bold text-info">{{ pedidosEnProceso() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-success bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-currency-dollar fs-3 text-success"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Total Ventas</h6>
+              <h3 class="mb-0 fw-bold text-success">${{ totalVentas().toFixed(2) }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-wrap gap-2">
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'todos' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="setFiltroEstado('todos')">
+          Todos
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'pendiente' ? 'btn-warning' : 'btn-outline-warning'"
+          (click)="setFiltroEstado('pendiente')">
+          ⏳ Pendientes
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'procesando' ? 'btn-info' : 'btn-outline-info'"
+          (click)="setFiltroEstado('procesando')">
+          🔄 En Proceso
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'enviado' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="setFiltroEstado('enviado')">
+          🚚 Enviados
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'entregado' ? 'btn-success' : 'btn-outline-success'"
+          (click)="setFiltroEstado('entregado')">
+          ✅ Entregados
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'cancelado' ? 'btn-danger' : 'btn-outline-danger'"
+          (click)="setFiltroEstado('cancelado')">
+          ❌ Cancelados
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3">Cargando pedidos...</p>
+    </div>
+  }
+
+  <!-- Tabla de pedidos -->
+  @if (!cargando()) {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if (pedidosFiltrados().length === 0) {
+                <tr>
+                  <td colspan="6" class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                    No hay pedidos con este filtro
+                  </td>
+                </tr>
+              }
+              @for (pedido of pedidosFiltrados(); track pedido.id_pedido) {
+                <tr>
+                  <td class="fw-bold">#{{ pedido.id_pedido }}</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-person-circle text-primary me-2 fs-5"></i>
+                      <div>
+                        <div class="fw-semibold">{{ getNombreUsuario(pedido.fk_id_usuario) }}</div>
+                        <small class="text-muted">ID: {{ pedido.fk_id_usuario }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ formatearFecha(pedido.fecha_pedido) }}</td>
+                  <td class="fw-bold text-success">${{ pedido.total?.toFixed(2) }}</td>
+                  <td>
+                    <span class="badge {{ getEstadoClass(pedido.estado_pedido) }}">
+                      {{ pedido.estado_pedido }}
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <button
+                      class="btn btn-sm btn-outline-primary me-2"
+                      (click)="verDetallePedido(pedido)"
+                      title="Ver detalle">
+                      <i class="bi bi-eye"></i> Ver
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-secondary"
+                      (click)="cambiarEstado(pedido)"
+                      title="Cambiar estado">
+                      <i class="bi bi-pencil-square"></i> Estado
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+</div>

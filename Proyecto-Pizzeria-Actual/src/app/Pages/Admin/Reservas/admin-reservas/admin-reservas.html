@@ -1,0 +1,183 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2 fw-bold text-primary mb-3">
+        <i class="bi bi-calendar-check"></i> Gestión de Reservas
+      </h1>
+      <p class="text-muted">Todas las reservas del sistema</p>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row g-3 mb-4">
+    <div class="col-lg-4 col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-calendar-check fs-3 text-primary"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Total Reservas</h6>
+              <h3 class="mb-0 fw-bold">{{ totalReservas() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-clock-history fs-3 text-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Pendientes</h6>
+              <h3 class="mb-0 fw-bold text-warning">{{ reservasPendientes() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-success bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-check-circle fs-3 text-success"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Confirmadas</h6>
+              <h3 class="mb-0 fw-bold text-success">{{ reservasConfirmadas() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-wrap gap-2">
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'todos' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="setFiltroEstado('todos')">
+          Todas
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'pendiente' ? 'btn-warning' : 'btn-outline-warning'"
+          (click)="setFiltroEstado('pendiente')">
+          ⏳ Pendientes
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'confirmada' ? 'btn-success' : 'btn-outline-success'"
+          (click)="setFiltroEstado('confirmada')">
+          ✅ Confirmadas
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'completada' ? 'btn-secondary' : 'btn-outline-secondary'"
+          (click)="setFiltroEstado('completada')">
+          🎉 Completadas
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'cancelada' ? 'btn-danger' : 'btn-outline-danger'"
+          (click)="setFiltroEstado('cancelada')">
+          ❌ Canceladas
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3">Cargando reservas...</p>
+    </div>
+  }
+
+  <!-- Tabla de reservas -->
+  @if (!cargando()) {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Personas</th>
+                <th>Local</th>
+                <th>Evento</th>
+                <th>Estado</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if (reservasFiltradas().length === 0) {
+                <tr>
+                  <td colspan="9" class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                    No hay reservas con este filtro
+                  </td>
+                </tr>
+              }
+              @for (reserva of reservasFiltradas(); track reserva.id_reserva) {
+                <tr>
+                  <td class="fw-bold">#{{ reserva.id_reserva }}</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-person-circle text-primary me-2 fs-5"></i>
+                      <div>
+                        <div class="fw-semibold">{{ getNombreUsuario(reserva.fk_id_usuario) }}</div>
+                        <small class="text-muted">ID: {{ reserva.fk_id_usuario }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ formatearFecha(reserva.fecha_reserva) }}</td>
+                  <td>{{ formatearHora(reserva.hora_reserva) }}</td>
+                  <td>
+                    <span class="badge bg-info">{{ reserva.cant_personas }}</span>
+                  </td>
+                  <td>{{ getNombreLocal(reserva.fk_id_local) }}</td>
+                  <td>
+                    @if (reserva.fk_id_evento) {
+                      <small>{{ getNombreEvento(reserva.fk_id_evento) }}</small>
+                    } @else {
+                      <span class="text-muted">-</span>
+                    }
+                  </td>
+                  <td>
+                    <span class="badge {{ getEstadoClass(reserva.estado) }}">
+                      {{ reserva.estado }}
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <button
+                      class="btn btn-sm btn-outline-primary"
+                      (click)="verDetalleReserva(reserva)"
+                      title="Ver detalle">
+                      <i class="bi bi-eye"></i> Ver
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,132 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+      <h1 class="h3 fw-bold">Dashboard Administrativo</h1>
+      <p class="text-muted mb-0">Gestión de tu pizzería</p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <a routerLink="/" class="btn btn-outline-primary">
+        <i class="bi bi-shop"></i> Ir al Sitio Cliente
+      </a>
+    </div>
+  </div>
+
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+    </div>
+  } @else {
+    <div class="row g-4 mb-4">
+      <div class="col-md-6 col-lg-4 col-xl-2">
+        <div class="card border-0 shadow-sm h-100 bg-primary text-white">
+          <div class="card-body text-center">
+            <h3 class="display-4">{{ totalProductos() }}</h3>
+            <p class="mb-0">Productos</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a routerLink="/admin/productos" class="btn btn-light btn-sm w-100">Gestionar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 col-xl-2">
+        <div class="card border-0 shadow-sm h-100 bg-success text-white">
+          <div class="card-body text-center">
+            <h3 class="display-4">{{ totalEventos() }}</h3>
+            <p class="mb-0">Eventos</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a routerLink="/admin/eventos" class="btn btn-light btn-sm w-100">Gestionar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 col-xl-2">
+        <div class="card border-0 shadow-sm h-100 bg-warning text-dark">
+          <div class="card-body text-center">
+            <h3 class="display-4">{{ totalPedidos() }}</h3>
+            <p class="mb-0">Pedidos</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a routerLink="/admin/pedidos" class="btn btn-dark btn-sm w-100">Ver</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 col-xl-2">
+        <div class="card border-0 shadow-sm h-100 bg-info text-white">
+          <div class="card-body text-center">
+            <h3 class="display-4">{{ totalReservas() }}</h3>
+            <p class="mb-0">Reservas</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a routerLink="/admin/reservas" class="btn btn-light btn-sm w-100">Ver</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 col-xl-2">
+        <div class="card border-0 shadow-sm h-100 bg-secondary text-white">
+          <div class="card-body text-center">
+            <h3 class="display-4">{{ totalLocales() }}</h3>
+            <p class="mb-0">Locales</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a routerLink="/admin/locales" class="btn btn-light btn-sm w-100">Gestionar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 col-xl-2">
+        <div class="card border-0 shadow-sm h-100 bg-dark text-white">
+          <div class="card-body text-center">
+            <h3 class="display-4">{{ totalUsuarios() }}</h3>
+            <p class="mb-0">Usuarios</p>
+          </div>
+          <div class="card-footer bg-transparent border-0">
+            <a routerLink="/admin/usuarios" class="btn btn-light btn-sm w-100">Gestionar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">📦 Gestión de Contenido</h5>
+            <div class="list-group list-group-flush">
+              <a routerLink="/admin/productos" class="list-group-item list-group-item-action">Productos</a>
+              <a routerLink="/admin/eventos" class="list-group-item list-group-item-action">Eventos</a>
+              <a routerLink="/admin/locales" class="list-group-item list-group-item-action">Locales</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">👥 Usuarios y Ventas</h5>
+            <div class="list-group list-group-flush">
+              <a routerLink="/admin/usuarios" class="list-group-item list-group-item-action">Usuarios</a>
+              <a routerLink="/admin/pedidos" class="list-group-item list-group-item-action">Pedidos</a>
+              <a routerLink="/admin/reservas" class="list-group-item list-group-item-action">Reservas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">💬 Comunicación</h5>
+            <div class="list-group list-group-flush">
+              <a routerLink="/admin/mensajes" class="list-group-item list-group-item-action">Mensajes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

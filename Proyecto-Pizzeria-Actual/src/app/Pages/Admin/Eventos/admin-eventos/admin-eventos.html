@@ -1,0 +1,166 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <h1 class="h2 fw-bold text-primary mb-2">
+        <i class="bi bi-calendar-event"></i> Gestión de Eventos
+      </h1>
+      <p class="text-muted">Administra todos los eventos del sistema</p>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <button class="btn btn-primary btn-lg" (click)="abrirFormularioNuevo()">
+        <i class="bi bi-plus-circle"></i> Nuevo Evento
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3">Cargando eventos...</p>
+    </div>
+  }
+
+  <!-- Tabla de eventos -->
+  @if (!cargando()) {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio Base</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if (eventos().length === 0) {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                    No hay eventos registrados
+                  </td>
+                </tr>
+              }
+              @for (evento of eventos(); track evento.id_evento || evento.id) {
+                <tr>
+                  <td class="fw-bold">{{ evento.id_evento || evento.id }}</td>
+                  <td>
+                    <div class="fw-semibold">{{ evento.nombre_evento || evento.titulo }}</div>
+                  </td>
+                  <td>
+                    <small class="text-muted">
+                      {{ evento.descripcion && evento.descripcion.length > 50
+                         ? evento.descripcion.substring(0, 50) + '...'
+                         : evento.descripcion }}
+                    </small>
+                  </td>
+                  <td>
+                    <span class="badge bg-success">${{ evento.precio_base?.toFixed(2) }}</span>
+                  </td>
+                  <td class="text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                      <button
+                        class="btn btn-outline-primary"
+                        (click)="abrirFormularioEditar(evento)"
+                        title="Editar">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        class="btn btn-outline-danger"
+                        (click)="eliminarEvento(evento)"
+                        title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal Formulario -->
+  @if (mostrarFormulario()) {
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">
+              <i class="bi bi-calendar-event"></i>
+              {{ modoEdicion() ? 'Editar Evento' : 'Nuevo Evento' }}
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="cerrarFormulario()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <!-- Nombre -->
+              <div class="col-md-8">
+                <label class="form-label fw-semibold">Nombre del Evento *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="titulo"
+                  placeholder="Nombre del evento">
+                @if (!tituloValido() && titulo().length > 0) {
+                  <small class="text-danger">Mínimo 3 caracteres</small>
+                }
+              </div>
+
+              <!-- Precio Base -->
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Precio Base *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="precioBase"
+                  min="0"
+                  step="0.01"
+                  placeholder="0.00">
+                @if (!precioValido() && precioBase() > 0) {
+                  <small class="text-danger">Debe ser mayor a 0</small>
+                }
+              </div>
+
+              <!-- Descripción -->
+              <div class="col-12">
+                <label class="form-label fw-semibold">Descripción *</label>
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  [(ngModel)]="descripcion"
+                  placeholder="Describe el evento..."></textarea>
+                @if (!descripcionValida() && descripcion().length > 0) {
+                  <small class="text-danger">Mínimo 10 caracteres</small>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cerrarFormulario()">
+              <i class="bi bi-x-circle"></i> Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="!formularioValido()"
+              (click)="guardarEvento()">
+              <i class="bi bi-save"></i>
+              {{ modoEdicion() ? 'Actualizar' : 'Crear' }} Evento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

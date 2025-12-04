@@ -1,0 +1,392 @@
+<!-- Página de Contacto - Pizzería Deliziosa -->
+
+<!-- Hero Section de Contacto -->
+<section class="contact-hero d-flex align-items-center justify-content-center text-center text-white position-relative">
+  <!-- Overlay -->
+  <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+  <!-- Contenido del hero -->
+  <div class="container position-relative z-3" [class.hero-loaded]="isLoaded()">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h1 class="hero-title display-2 fw-bold mb-4 text-glow">
+          Contáctanos
+        </h1>
+        <p class="hero-subtitle lead mb-4">
+          Estamos aquí para hacer realidad tu antojo de pizza perfecta.<br>
+          <strong class="text-warning">¡Comunícate con nosotros!</strong>
+        </p>
+        <div class="hero-badges">
+          <span class="badge bg-success me-3 px-3 py-2 fs-6 rounded-pill">
+            <i class="bi bi-clock-fill me-2"></i>
+            Respuesta rápida
+          </span>
+          <span class="badge bg-warning text-dark px-3 py-2 fs-6 rounded-pill">
+            <i class="bi bi-headset me-2"></i>
+            Atención 24/7
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Principal de Contacto -->
+<section class="main-contact-section py-5">
+  <div class="container">
+
+    <!-- Mensaje de éxito -->
+    @if (showSuccessMessage()) {
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+          <div class="alert alert-success alert-dismissible fade show shadow-lg success-animation" role="alert">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-check-circle-fill fs-2 me-3 text-success"></i>
+              <div>
+                <h4 class="alert-heading mb-2">¡Mensaje enviado con éxito! 🍕</h4>
+                <p class="mb-0">
+                  Gracias por contactarnos. Te responderemos pronto para ayudarte con tu pedido o consulta.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="row g-5">
+
+      <!-- Formulario de Contacto -->
+      <div class="col-lg-7">
+        <div class="contact-form-container">
+          <div class="section-header mb-5">
+            <h2 class="section-title h1 fw-bold text-primary mb-3">
+              <i class="bi bi-envelope-heart me-3"></i>
+              Envíanos un Mensaje
+            </h2>
+            <p class="section-subtitle lead text-muted">
+              ¿Tienes alguna pregunta, sugerencia o quieres hacer un pedido especial?
+              Completa el formulario y te contactaremos pronto.
+            </p>
+          </div>
+
+          <!-- Formulario -->
+          <div class="contact-form shadow-lg rounded-4 p-4 p-md-5">
+
+            <!-- Nombre -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-primary">
+                <i class="bi bi-person-fill me-2"></i>
+                Nombre Completo *
+              </label>
+              <input
+                type="text"
+                class="form-control form-control-lg rounded-pill"
+                [class.is-valid]="nombre() && isNombreValid()"
+                [class.is-invalid]="nombre() && !isNombreValid()"
+                [(ngModel)]="nombre"
+                placeholder="Tu nombre completo"
+                maxlength="50">
+              @if (nombre() && !isNombreValid()) {
+                <div class="invalid-feedback">
+                  <i class="bi bi-exclamation-triangle me-1"></i>
+                  El nombre debe tener al menos 2 caracteres.
+                </div>
+              }
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-primary">
+                <i class="bi bi-envelope-fill me-2"></i>
+                Correo Electrónico *
+              </label>
+              <input
+                type="email"
+                class="form-control form-control-lg rounded-pill"
+                [class.is-valid]="email() && isEmailValid()"
+                [class.is-invalid]="email() && !isEmailValid()"
+                [(ngModel)]="email"
+                placeholder="tu@email.com"
+                maxlength="100">
+              @if (email() && !isEmailValid()) {
+                <div class="invalid-feedback">
+                  <i class="bi bi-exclamation-triangle me-1"></i>
+                  Por favor ingresa un email válido.
+                </div>
+              }
+            </div>
+
+            <!-- Teléfono -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-primary">
+                <i class="bi bi-telephone-fill me-2"></i>
+                Teléfono *
+              </label>
+              <input
+                type="tel"
+                class="form-control form-control-lg rounded-pill"
+                [class.is-valid]="telefono() && isTelefonoValid()"
+                [class.is-invalid]="telefono() && !isTelefonoValid()"
+                [(ngModel)]="telefono"
+                placeholder="+51 987 654 321"
+                maxlength="15">
+              @if (telefono() && !isTelefonoValid()) {
+                <div class="invalid-feedback">
+                  <i class="bi bi-exclamation-triangle me-1"></i>
+                  El teléfono debe tener al menos 9 dígitos.
+                </div>
+              }
+            </div>
+
+            <!-- Asunto -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-primary">
+                <i class="bi bi-chat-dots-fill me-2"></i>
+                Asunto *
+              </label>
+              <select
+                class="form-select form-select-lg rounded-pill"
+                [class.is-valid]="asunto() && isAsuntoValid()"
+                [class.is-invalid]="asunto() && !isAsuntoValid()"
+                [(ngModel)]="asunto">
+                <option value="">Selecciona un asunto</option>
+                <option value="pedido">🍕 Realizar Pedido</option>
+                <option value="consulta">❓ Consulta General</option>
+                <option value="sugerencia">💡 Sugerencia</option>
+                <option value="queja">😔 Queja o Reclamo</option>
+                <option value="eventos">🎉 Eventos Especiales</option>
+                <option value="delivery">🚚 Consulta sobre Delivery</option>
+                <option value="otro">📝 Otro</option>
+              </select>
+              @if (asunto() && !isAsuntoValid()) {
+                <div class="invalid-feedback">
+                  <i class="bi bi-exclamation-triangle me-1"></i>
+                  Por favor selecciona un asunto.
+                </div>
+              }
+            </div>
+
+            <!-- Mensaje -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-primary">
+                <i class="bi bi-chat-text-fill me-2"></i>
+                Mensaje *
+              </label>
+              <textarea
+                class="form-control form-control-lg rounded-4"
+                [class.is-valid]="mensaje() && isMensajeValid()"
+                [class.is-invalid]="mensaje() && !isMensajeValid()"
+                [(ngModel)]="mensaje"
+                rows="5"
+                placeholder="Escribe tu mensaje aquí... ¡Cuéntanos qué pizza te gustaría o qué necesitas!"
+                maxlength="500"></textarea>
+              <div class="form-text">
+                <i class="bi bi-info-circle me-1"></i>
+                {{ mensaje().length }}/500 caracteres
+              </div>
+              @if (mensaje() && !isMensajeValid()) {
+                <div class="invalid-feedback">
+                  <i class="bi bi-exclamation-triangle me-1"></i>
+                  El mensaje debe tener al menos 10 caracteres.
+                </div>
+              }
+            </div>
+
+            <!-- Botón de envío -->
+            <div class="d-grid">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg py-3 fw-bold text-uppercase rounded-pill submit-button"
+                [disabled]="!isFormValid() || isSubmitting()"
+                (click)="onSubmitForm()">
+                @if (isSubmitting()) {
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                  Enviando Mensaje...
+                } @else {
+                  <i class="bi bi-send-fill me-2"></i>
+                  Enviar Mensaje
+                }
+              </button>
+            </div>
+
+            <!-- Nota de privacidad -->
+            <div class="mt-3 text-center">
+              <small class="text-muted">
+                <i class="bi bi-shield-check me-1"></i>
+                Tus datos están seguros con nosotros. No compartimos información personal.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información de Contacto -->
+      <div class="col-lg-5">
+        <div class="contact-info-container">
+
+          <!-- Contacto Directo -->
+          <div class="contact-info-card mb-4 shadow-lg rounded-4 p-4">
+            <h3 class="card-title h4 fw-bold text-primary mb-4">
+              <i class="bi bi-telephone-heart me-2"></i>
+              Contacto Directo
+            </h3>
+
+            <div class="contact-methods">
+              <!-- Teléfono -->
+              <div class="contact-method mb-3 p-3 rounded-3 hover-effect" (click)="makeCall()">
+                <div class="d-flex align-items-center">
+                  <div class="method-icon bg-primary-light rounded-circle p-3 me-3">
+                    <i class="bi bi-telephone-fill text-primary fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="mb-1 fw-bold">Teléfono</h5>
+                    <p class="mb-0 text-muted">+51 987 654 321</p>
+                    <small class="text-success fw-semibold">
+                      <i class="bi bi-circle-fill me-1"></i>
+                      Disponible ahora
+                    </small>
+                  </div>
+                  <i class="bi bi-arrow-right-circle text-primary fs-5"></i>
+                </div>
+              </div>
+
+              <!-- WhatsApp -->
+              <div class="contact-method mb-3 p-3 rounded-3 hover-effect" (click)="openWhatsApp()">
+                <div class="d-flex align-items-center">
+                  <div class="method-icon bg-success-light rounded-circle p-3 me-3">
+                    <i class="bi bi-whatsapp text-success fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="mb-1 fw-bold">WhatsApp</h5>
+                    <p class="mb-0 text-muted">+51 987 654 321</p>
+                    <small class="text-success fw-semibold">
+                      <i class="bi bi-circle-fill me-1"></i>
+                      Respuesta inmediata
+                    </small>
+                  </div>
+                  <i class="bi bi-arrow-right-circle text-success fs-5"></i>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="contact-method mb-3 p-3 rounded-3 hover-effect" (click)="sendEmail()">
+                <div class="d-flex align-items-center">
+                  <div class="method-icon bg-warning-light rounded-circle p-3 me-3">
+                    <i class="bi bi-envelope-fill text-warning fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="mb-1 fw-bold">Email</h5>
+                    <p class="mb-0 text-muted">info@pizzeriadeliziosa.com</p>
+                    <small class="text-info fw-semibold">
+                      <i class="bi bi-circle-fill me-1"></i>
+                      Respuesta en 24hrs
+                    </small>
+                  </div>
+                  <i class="bi bi-arrow-right-circle text-warning fs-5"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ubicación -->
+          <div class="location-card mb-4 shadow-lg rounded-4 p-4">
+            <h3 class="card-title h4 fw-bold text-primary mb-4">
+              <i class="bi bi-geo-alt-fill me-2"></i>
+              Nuestra Ubicación
+            </h3>
+
+            <div class="location-info">
+              <div class="address-info mb-3 p-3 bg-light rounded-3">
+                <div class="d-flex align-items-start">
+                  <i class="bi bi-pin-map-fill text-danger fs-4 me-3 mt-1"></i>
+                  <div>
+                    <h5 class="mb-1 fw-bold">Dirección</h5>
+                    <p class="mb-2">
+                      Av. Principal 123<br>
+                      Cercado, Lima 15001<br>
+                      Perú
+                    </p>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill" (click)="openMap()">
+                      <i class="bi bi-map me-1"></i>
+                      Ver en Google Maps
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Referencias -->
+              <div class="references">
+                <h6 class="fw-bold mb-2">
+                  <i class="bi bi-signpost me-2 text-info"></i>
+                  Referencias:
+                </h6>
+                <ul class="list-unstyled ms-4">
+                  <li class="mb-1">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    A 2 cuadras de la Plaza de Armas
+                  </li>
+                  <li class="mb-1">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    Frente al Banco de la Nación
+                  </li>
+                  <li class="mb-1">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    Al lado de la Farmacia Universal
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horarios -->
+          <div class="schedule-card shadow-lg rounded-4 p-4">
+            <h3 class="card-title h4 fw-bold text-primary mb-4">
+              <i class="bi bi-clock-history me-2"></i>
+              Horarios de Atención
+            </h3>
+
+            <div class="schedule-list">
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2 border-bottom">
+                <span class="fw-semibold">
+                  <i class="bi bi-calendar-week text-primary me-2"></i>
+                  Lunes - Jueves
+                </span>
+                <span class="text-primary fw-bold">12:00 PM - 10:00 PM</span>
+              </div>
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2 border-bottom">
+                <span class="fw-semibold">
+                  <i class="bi bi-calendar-event text-primary me-2"></i>
+                  Viernes
+                </span>
+                <span class="text-primary fw-bold">12:00 PM - 11:00 PM</span>
+              </div>
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2 border-bottom">
+                <span class="fw-semibold">
+                  <i class="bi bi-calendar-check text-success me-2"></i>
+                  Sábados
+                </span>
+                <span class="text-success fw-bold">11:00 AM - 11:00 PM</span>
+              </div>
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2">
+                <span class="fw-semibold">
+                  <i class="bi bi-calendar-heart text-success me-2"></i>
+                  Domingos
+                </span>
+                <span class="text-success fw-bold">11:00 AM - 10:00 PM</span>
+              </div>
+            </div>
+
+            <div class="mt-3 p-3 bg-warning-light rounded-3">
+              <small class="text-dark fw-semibold">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                Último pedido 30 minutos antes del cierre
+              </small>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

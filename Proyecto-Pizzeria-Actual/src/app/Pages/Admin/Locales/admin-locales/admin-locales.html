@@ -1,0 +1,259 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <h1 class="h2 fw-bold text-primary mb-2">
+        <i class="bi bi-geo-alt"></i> Gestión de Locales
+      </h1>
+      <p class="text-muted">Administra todos los locales del sistema</p>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <button class="btn btn-primary btn-lg" (click)="abrirFormularioNuevo()">
+        <i class="bi bi-plus-circle"></i> Nuevo Local
+      </button>
+    </div>
+  </div>
+
+  <!-- Estadística -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-building fs-3 text-primary"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Total Locales</h6>
+              <h3 class="mb-0 fw-bold">{{ totalLocales() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3">Cargando locales...</p>
+    </div>
+  }
+
+  <!-- Tabla de locales -->
+  @if (!cargando()) {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Ciudad</th>
+                <th>Capacidad</th>
+                <th>Teléfono</th>
+                <th>Horario</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if (locales().length === 0) {
+                <tr>
+                  <td colspan="8" class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                    No hay locales registrados
+                  </td>
+                </tr>
+              }
+              @for (local of locales(); track local.id_local || local.id) {
+                <tr>
+                  <td class="fw-bold">{{ local.id_local || local.id }}</td>
+                  <td>
+                    <div class="fw-semibold">{{ local.nombre }}</div>
+                    @if (local.email) {
+                      <small class="text-muted">{{ local.email }}</small>
+                    }
+                  </td>
+                  <td>
+                    <small>{{ local.direccion }}</small>
+                  </td>
+                  <td>{{ local.ciudad || '-' }}</td>
+                  <td>
+                    <span class="badge bg-info">{{ local.capacidad }}</span>
+                  </td>
+                  <td>{{ local.telefono || '-' }}</td>
+                  <td>
+                    <small>{{ formatearHorario(local.horarioApertura, local.horarioCierre) }}</small>
+                  </td>
+                  <td class="text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                      <button
+                        class="btn btn-outline-primary"
+                        (click)="abrirFormularioEditar(local)"
+                        title="Editar">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        class="btn btn-outline-danger"
+                        (click)="eliminarLocal(local)"
+                        title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal Formulario -->
+  @if (mostrarFormulario()) {
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">
+              <i class="bi bi-geo-alt"></i>
+              {{ modoEdicion() ? 'Editar Local' : 'Nuevo Local' }}
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="cerrarFormulario()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <!-- Nombre -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Nombre *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="nombre"
+                  placeholder="Nombre del local">
+                @if (!nombreValido() && nombre().length > 0) {
+                  <small class="text-danger">Mínimo 3 caracteres</small>
+                }
+              </div>
+
+              <!-- Ciudad -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Ciudad *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="ciudad"
+                  placeholder="Lima, Cusco, etc.">
+                @if (!ciudadValida() && ciudad().length > 0) {
+                  <small class="text-danger">Mínimo 3 caracteres</small>
+                }
+              </div>
+
+              <!-- Dirección -->
+              <div class="col-12">
+                <label class="form-label fw-semibold">Dirección *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="direccion"
+                  placeholder="Dirección completa">
+                @if (!direccionValida() && direccion().length > 0) {
+                  <small class="text-danger">Mínimo 5 caracteres</small>
+                }
+              </div>
+
+              <!-- Ubicación -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Ubicación (Opcional)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="ubicacion"
+                  placeholder="Referencia de ubicación">
+              </div>
+
+              <!-- Capacidad -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Capacidad *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="capacidad"
+                  min="1"
+                  placeholder="Número de personas">
+              </div>
+
+              <!-- Teléfono -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Teléfono</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="telefono"
+                  placeholder="+51 999 999 999">
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="email"
+                  placeholder="contacto@local.com">
+              </div>
+
+              <!-- Horario (Texto) -->
+              <div class="col-12">
+                <label class="form-label fw-semibold">Descripción Horario</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="horario"
+                  placeholder="Ej: Lunes a Domingo">
+              </div>
+
+              <!-- Horario Apertura -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Horario Apertura</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  [(ngModel)]="horarioApertura">
+              </div>
+
+              <!-- Horario Cierre -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Horario Cierre</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  [(ngModel)]="horarioCierre">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cerrarFormulario()">
+              <i class="bi bi-x-circle"></i> Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="!formularioValido()"
+              (click)="guardarLocal()">
+              <i class="bi bi-save"></i>
+              {{ modoEdicion() ? 'Actualizar' : 'Crear' }} Local
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,147 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2 fw-bold text-primary mb-3">
+        <i class="bi bi-envelope"></i> Gestión de Mensajes
+      </h1>
+      <p class="text-muted">Buzón de mensajes y consultas</p>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-envelope-open fs-3 text-primary"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Total Mensajes</h6>
+              <h3 class="mb-0 fw-bold">{{ totalMensajes() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-envelope-exclamation fs-3 text-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">No Leídos</h6>
+              <h3 class="mb-0 fw-bold text-warning">{{ mensajesNoLeidos() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-wrap gap-2">
+        <button
+          class="btn"
+          [class]="filtroLeido() === 'todos' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="setFiltro('todos')">
+          Todos
+        </button>
+        <button
+          class="btn"
+          [class]="filtroLeido() === 'no-leidos' ? 'btn-warning' : 'btn-outline-warning'"
+          (click)="setFiltro('no-leidos')">
+          📩 No Leídos
+        </button>
+        <button
+          class="btn"
+          [class]="filtroLeido() === 'leidos' ? 'btn-secondary' : 'btn-outline-secondary'"
+          (click)="setFiltro('leidos')">
+          📖 Leídos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3">Cargando mensajes...</p>
+    </div>
+  }
+
+  <!-- Tabla de mensajes -->
+  @if (!cargando()) {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Estado</th>
+                <th>Remitente</th>
+                <th>Asunto</th>
+                <th>Fecha</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if (mensajesFiltrados().length === 0) {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                    No hay mensajes con este filtro
+                  </td>
+                </tr>
+              }
+              @for (mensaje of mensajesFiltrados(); track mensaje.id_mensaje) {
+                <tr [class.table-light]="mensaje.leido">
+                  <td>
+                    @if (!mensaje.leido) {
+                      <span class="badge bg-warning text-dark">Nuevo</span>
+                    } @else {
+                      <span class="badge bg-secondary">Leído</span>
+                    }
+                  </td>
+                  <td>
+                    <div class="fw-semibold">{{ mensaje.remitente || getNombreUsuario(mensaje.fk_id_usuario) }}</div>
+                    <small class="text-muted">{{ mensaje.destinatario || 'Admin' }}</small>
+                  </td>
+                  <td>
+                    <div class="text-truncate" style="max-width: 300px;">
+                      {{ mensaje.asunto }}
+                    </div>
+                  </td>
+                  <td>{{ formatearFecha(mensaje.fecha_envio) }}</td>
+                  <td class="text-center">
+                    <button
+                      class="btn btn-sm btn-outline-primary me-2"
+                      (click)="verMensaje(mensaje)"
+                      title="Leer mensaje">
+                      <i class="bi bi-eye"></i> Leer
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="eliminarMensaje(mensaje)"
+                      title="Eliminar">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+</div>

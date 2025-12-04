@@ -1,0 +1,379 @@
+<!-- Página Principal - Pizzería Deliziosa -->
+
+<!-- SECCIÓN 1: PRESENTACIÓN / HERO SECTION EXPANDIDA -->
+<section class="hero-section d-flex align-items-center justify-content-center text-center text-white position-relative">
+  <!-- Partículas flotantes animadas -->
+  <div class="floating-particles position-absolute top-0 start-0 w-100 h-100">
+    <div class="particle particle-1"></div>
+    <div class="particle particle-2"></div>
+    <div class="particle particle-3"></div>
+    <div class="particle particle-4"></div>
+    <div class="particle particle-5"></div>
+    <div class="particle particle-6"></div>
+  </div>
+
+  <!-- Overlay animado para oscurecer la imagen de fondo -->
+  <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100 animated-overlay"></div>
+
+  <!-- Contenido principal expandido -->
+  <div class="container position-relative z-3" [class.hero-loaded]="isLoaded()">
+    <div class="row justify-content-center">
+      <div class="col-lg-12 col-xl-10">
+
+        <!-- Badges superiores animados -->
+        <div class="hero-badges mb-4 slide-down">
+          <span class="badge bg-warning text-dark me-3 px-3 py-2 fs-6 rounded-pill">
+            <i class="bi bi-award-fill me-2"></i>
+            #1 en Lima
+          </span>
+          <span class="badge bg-success me-3 px-3 py-2 fs-6 rounded-pill">
+            <i class="bi bi-clock-fill me-2"></i>
+            30+ años de tradición
+          </span>
+          <span class="badge bg-danger px-3 py-2 fs-6 rounded-pill">
+            <i class="bi bi-fire me-2"></i>
+            Horno de leña
+          </span>
+        </div>
+
+        <!-- Nombre de la pizzería con efectos -->
+        <div class="brand-container mb-4 scale-in">
+          <h1 class="brand-title display-1 fw-bold mb-3 text-glow">
+            Pizzería Deliziosa
+          </h1>
+          <div class="brand-underline mx-auto"></div>
+        </div>
+
+        <!-- Eslogan con animación de typing -->
+        <h2 class="hero-slogan h2 mb-5 text-warning fw-bold slide-up typing-effect">
+          "El Sabor que Une a la Familia"
+        </h2>
+
+        <!-- Descripción expandida -->
+        <div class="hero-description-container mb-5 fade-in-delayed">
+          <p class="hero-description lead mb-4 px-md-3">
+            Hechas con ingredientes frescos y la pasión de nuestra receta tradicional italiana.
+            Cada pizza es una obra maestra artesanal, preparada con amor y horneada en nuestro
+            auténtico horno de leña que le da ese sabor único e inigualable.
+          </p>
+
+          <!-- Características destacadas -->
+          <div class="hero-features row g-3 mb-5">
+            <div class="col-md-4">
+              <div class="feature-item pulse-animation">
+                <i class="bi bi-check-circle-fill text-success fs-4 me-2"></i>
+                <span class="fw-semibold">Ingredientes Frescos</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-item pulse-animation" style="animation-delay: 0.2s;">
+                <i class="bi bi-check-circle-fill text-success fs-4 me-2"></i>
+                <span class="fw-semibold">Masa Artesanal</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-item pulse-animation" style="animation-delay: 0.4s;">
+                <i class="bi bi-check-circle-fill text-success fs-4 me-2"></i>
+                <span class="fw-semibold">Horno de Leña</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de llamada a la acción expandidos -->
+        <div class="hero-buttons slide-up-delayed">
+          <button
+            class="btn btn-primary btn-lg px-5 py-3 fw-bold text-uppercase me-3 mb-3 pulse-button"
+            (click)="scrollToContact()">
+            <i class="bi bi-telephone-fill me-2"></i>
+            ¡Llámanos para Pedir!
+          </button>
+
+          <button
+            class="btn btn-outline-light btn-lg px-5 py-3 fw-bold text-uppercase mb-3 floating-button">
+            <i class="bi bi-whatsapp me-2"></i>
+            WhatsApp Directo
+          </button>
+        </div>
+
+        <!-- Información rápida -->
+        <div class="hero-quick-info mt-5 fade-in-last">
+          <div class="row g-3 justify-content-center">
+            <div class="col-auto">
+              <div class="quick-info-item">
+                <i class="bi bi-clock text-warning fs-5"></i>
+                <small class="d-block">Entrega en 30 min</small>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="quick-info-item">
+                <i class="bi bi-geo-alt text-warning fs-5"></i>
+                <small class="d-block">Delivery gratuito</small>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="quick-info-item">
+                <i class="bi bi-star-fill text-warning fs-5"></i>
+                <small class="d-block">5⭐ en Google</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll mejorado -->
+  <div class="scroll-indicator position-absolute bottom-0 start-50 translate-middle-x mb-4">
+    <div class="scroll-text mb-2">
+      <small class="text-white-50">Desliza para conocer más</small>
+    </div>
+    <i class="bi bi-chevron-down text-white fs-2 animate-bounce-enhanced"></i>
+  </div>
+</section>
+
+<!-- SECCIÓN 2: CONTACTO EXPANDIDA -->
+<section id="contacto-section" class="contact-section py-5">
+  <div class="container">
+
+    <!-- Título de la sección con animación -->
+    <div class="text-center mb-5 section-header">
+      <div class="section-badge mb-3">
+        <span class="badge bg-primary fs-6 px-4 py-2 rounded-pill">
+          <i class="bi bi-headset me-2"></i>
+          Estamos aquí para ti
+        </span>
+      </div>
+      <h2 class="section-title display-3 fw-bold text-primary mb-4 animate-title">
+        ¡Haz tu Pedido Ahora!
+      </h2>
+      <p class="lead text-muted mb-4 animate-subtitle">
+        Contacta con nosotros y disfruta de nuestras deliciosas pizzas artesanales.<br>
+        <strong class="text-primary">¡Entrega rápida y servicio de primera!</strong>
+      </p>
+
+      <!-- Estadísticas animadas -->
+      <div class="stats-container row g-3 mb-5">
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-primary fw-bold h3 counter-animation" data-target="5000">0</div>
+            <div class="stat-label text-muted small">Pizzas Vendidas</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-success fw-bold h3 counter-animation" data-target="98">0</div>
+            <div class="stat-label text-muted small">% Satisfacción</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-warning fw-bold h3 counter-animation" data-target="25">0</div>
+            <div class="stat-label text-muted small">Min. Entrega</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number text-accent fw-bold h3 counter-animation" data-target="30">0</div>
+            <div class="stat-label text-muted small">Años Experiencia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información de contacto expandida -->
+    <div class="row g-4 mb-5 contact-cards">
+
+      <!-- Teléfono Principal -->
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card card border-0 shadow-lg h-100 text-center p-4 hover-lift">
+          <div class="contact-icon mb-3 icon-pulse">
+            <div class="icon-bg bg-primary-light rounded-circle d-inline-flex align-items-center justify-content-center">
+              <i class="bi bi-telephone-fill text-primary fs-1"></i>
+            </div>
+          </div>
+          <h4 class="card-title h5 fw-bold mb-3">Teléfono Principal</h4>
+          <p class="card-text mb-3 text-muted">Llámanos directamente</p>
+          <div class="mb-3">
+            <div class="badge bg-success-subtle text-success mb-2">Disponible ahora</div>
+          </div>
+          <a href="tel:+51987654321" class="btn btn-primary fw-semibold rounded-pill px-4 pulse-on-hover">
+            <i class="bi bi-telephone me-2"></i>
+            +51 987 654 321
+          </a>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card card border-0 shadow-lg h-100 text-center p-4 hover-lift">
+          <div class="contact-icon mb-3 icon-pulse" style="animation-delay: 0.2s;">
+            <div class="icon-bg bg-success-light rounded-circle d-inline-flex align-items-center justify-content-center">
+              <i class="bi bi-whatsapp text-success fs-1"></i>
+            </div>
+          </div>
+          <h4 class="card-title h5 fw-bold mb-3">WhatsApp</h4>
+          <p class="card-text mb-3 text-muted">Pedidos y consultas</p>
+          <div class="mb-3">
+            <div class="badge bg-success-subtle text-success mb-2">Respuesta inmediata</div>
+          </div>
+          <a href="https://wa.me/51987654321" target="_blank" class="btn btn-success fw-semibold rounded-pill px-4 pulse-on-hover">
+            <i class="bi bi-whatsapp me-2"></i>
+            Escribir WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Ubicación -->
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card card border-0 shadow-lg h-100 text-center p-4 hover-lift">
+          <div class="contact-icon mb-3 icon-pulse" style="animation-delay: 0.4s;">
+            <div class="icon-bg bg-warning-light rounded-circle d-inline-flex align-items-center justify-content-center">
+              <i class="bi bi-geo-alt-fill text-warning fs-1"></i>
+            </div>
+          </div>
+          <h4 class="card-title h5 fw-bold mb-3">Ubicación</h4>
+          <p class="card-text mb-3 text-muted">
+            Av. Principal 123<br>
+            Lima, Perú
+          </p>
+          <div class="mb-3">
+            <div class="badge bg-info-subtle text-info mb-2">Zona centrica</div>
+          </div>
+          <button class="btn btn-warning text-dark fw-semibold rounded-pill px-4 pulse-on-hover">
+            <i class="bi bi-map me-2"></i>
+            Ver en Mapa
+          </button>
+        </div>
+      </div>
+
+      <!-- Delivery -->
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card card border-0 shadow-lg h-100 text-center p-4 hover-lift">
+          <div class="contact-icon mb-3 icon-pulse" style="animation-delay: 0.6s;">
+            <div class="icon-bg bg-danger-light rounded-circle d-inline-flex align-items-center justify-content-center">
+              <i class="bi bi-bicycle text-danger fs-1"></i>
+            </div>
+          </div>
+          <h4 class="card-title h5 fw-bold mb-3">Delivery</h4>
+          <p class="card-text mb-3 text-muted">Entrega a domicilio</p>
+          <div class="mb-3">
+            <div class="badge bg-success-subtle text-success mb-2">Gratis zona urbana</div>
+          </div>
+          <button class="btn btn-danger fw-semibold rounded-pill px-4 pulse-on-hover">
+            <i class="bi bi-truck me-2"></i>
+            Solicitar Delivery
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Horarios expandidos con más información -->
+    <div class="row g-4">
+
+      <!-- Horarios de atención -->
+      <div class="col-md-6">
+        <div class="schedule-card card border-0 shadow-lg h-100">
+          <div class="card-header bg-primary text-white text-center py-3">
+            <h3 class="card-title h4 fw-bold mb-0">
+              <i class="bi bi-clock-history me-2"></i>
+              Horarios de Atención
+            </h3>
+          </div>
+          <div class="card-body p-4">
+            <div class="schedule-list">
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2 border-bottom">
+                <span class="fw-semibold">Lunes - Jueves</span>
+                <span class="text-primary fw-bold">12:00 PM - 10:00 PM</span>
+              </div>
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2 border-bottom">
+                <span class="fw-semibold">Viernes</span>
+                <span class="text-primary fw-bold">12:00 PM - 11:00 PM</span>
+              </div>
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2 border-bottom">
+                <span class="fw-semibold">Sábados</span>
+                <span class="text-success fw-bold">11:00 AM - 11:00 PM</span>
+              </div>
+              <div class="schedule-item d-flex justify-content-between align-items-center py-2">
+                <span class="fw-semibold">Domingos</span>
+                <span class="text-success fw-bold">11:00 AM - 10:00 PM</span>
+              </div>
+            </div>
+            <div class="text-center mt-3">
+              <small class="text-muted">
+                <i class="bi bi-info-circle me-1"></i>
+                Último pedido 30 minutos antes del cierre
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métodos de pago -->
+      <div class="col-md-6">
+        <div class="payment-card card border-0 shadow-lg h-100">
+          <div class="card-header bg-success text-white text-center py-3">
+            <h3 class="card-title h4 fw-bold mb-0">
+              <i class="bi bi-credit-card me-2"></i>
+              Métodos de Pago
+            </h3>
+          </div>
+          <div class="card-body p-4">
+            <div class="payment-methods">
+              <div class="payment-item d-flex align-items-center py-2">
+                <i class="bi bi-cash-coin text-success fs-4 me-3"></i>
+                <div>
+                  <div class="fw-semibold">Efectivo</div>
+                  <small class="text-muted">Pago contra entrega</small>
+                </div>
+              </div>
+              <div class="payment-item d-flex align-items-center py-2">
+                <i class="bi bi-credit-card-fill text-primary fs-4 me-3"></i>
+                <div>
+                  <div class="fw-semibold">Tarjetas</div>
+                  <small class="text-muted">Visa, Mastercard</small>
+                </div>
+              </div>
+              <div class="payment-item d-flex align-items-center py-2">
+                <i class="bi bi-phone-fill text-warning fs-4 me-3"></i>
+                <div>
+                  <div class="fw-semibold">Transferencias</div>
+                  <small class="text-muted">Yape, Plin, BCP</small>
+                </div>
+              </div>
+              <div class="payment-item d-flex align-items-center py-2">
+                <i class="bi bi-qr-code text-info fs-4 me-3"></i>
+                <div>
+                  <div class="fw-semibold">Código QR</div>
+                  <small class="text-muted">Pago rápido y seguro</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Call to action final -->
+    <div class="final-cta text-center mt-5 pt-4">
+      <div class="cta-container">
+        <h3 class="h2 text-primary fw-bold mb-3">¿Listo para disfrutar?</h3>
+        <p class="lead mb-4">¡No esperes más! Haz tu pedido ahora y disfruta de la mejor pizza artesanal de Lima.</p>
+        <div class="cta-buttons">
+          <a href="tel:+51987654321" class="btn btn-primary btn-lg me-3 mb-3 animated-button">
+            <i class="bi bi-telephone-fill me-2"></i>
+            Llamar Ahora
+          </a>
+          <a href="https://wa.me/51987654321" class="btn btn-success btn-lg mb-3 animated-button">
+            <i class="bi bi-whatsapp me-2"></i>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

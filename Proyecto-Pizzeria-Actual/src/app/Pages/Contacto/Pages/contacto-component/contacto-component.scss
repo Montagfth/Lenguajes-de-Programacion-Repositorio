@@ -1,0 +1,512 @@
+// Importar Google Fonts y Bootstrap Icons
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
+
+// Variables de colores (consistentes con el home)
+:root {
+  --color-primary: #D94330;      // Rojo tomate
+  --color-primary-light: #ffebee;
+  --color-primary-dark: #b71c1c;
+  --color-accent: #4A734C;       // Verde albahaca
+  --color-background: #F9F6F1;   // Crema de masa
+  --color-text: #333333;         // Gris oscuro
+  --color-success-light: #e8f8f5;
+  --color-warning-light: #fff8e1;
+  --color-danger-light: #ffebee;
+  --color-info-light: #e3f2fd;
+}
+
+// Base styles
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+// =====================================================
+// HERO SECTION DE CONTACTO
+// =====================================================
+
+.contact-hero {
+  height: 60vh;
+  min-height: 400px;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
+              url('https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+
+  .hero-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(217, 67, 48, 0.2) 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      rgba(74, 115, 76, 0.2) 100%
+    );
+    animation: overlayPulse 6s ease-in-out infinite;
+  }
+
+  .hero-loaded {
+    .hero-title {
+      animation: zoomIn 1.2s ease-out;
+    }
+
+    .hero-subtitle {
+      animation: slideInUp 1s ease-out 0.3s both;
+    }
+
+    .hero-badges {
+      animation: fadeIn 1s ease-out 0.6s both;
+    }
+  }
+
+  .hero-title {
+    font-family: 'Lobster', cursive !important;
+    font-size: 4rem;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+
+    &.text-glow {
+      text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 193, 7, 0.6),
+        3px 3px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    line-height: 1.6;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  .hero-badges {
+    .badge {
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1) translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
+
+// =====================================================
+// SECCIÓN PRINCIPAL DE CONTACTO
+// =====================================================
+
+.main-contact-section {
+  background: linear-gradient(135deg, var(--color-background) 0%, #f8f9fa 50%, var(--color-background) 100%);
+  padding: 100px 0;
+  position: relative;
+
+  // Mensaje de éxito
+  .success-animation {
+    animation: bounceIn 0.8s ease-out;
+    border-left: 5px solid #28a745;
+  }
+}
+
+// =====================================================
+// FORMULARIO DE CONTACTO
+// =====================================================
+
+.contact-form-container {
+  .section-header {
+    .section-title {
+      color: var(--color-primary);
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .contact-form {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid rgba(217, 67, 48, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      transition: left 0.8s ease;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(217, 67, 48, 0.15) !important;
+      border-color: rgba(217, 67, 48, 0.3);
+
+      &::before {
+        left: 0;
+      }
+    }
+
+    // Estilos para inputs
+    .form-control {
+      border: 2px solid #e9ecef;
+      transition: all 0.3s ease;
+      font-weight: 500;
+
+      &:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 0.25rem rgba(217, 67, 48, 0.15);
+        transform: translateY(-2px);
+      }
+
+      &.is-valid {
+        border-color: #28a745;
+
+        &:focus {
+          border-color: #28a745;
+          box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.15);
+        }
+      }
+
+      &.is-invalid {
+        border-color: #dc3545;
+
+        &:focus {
+          border-color: #dc3545;
+          box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.15);
+        }
+      }
+    }
+
+    // Labels
+    .form-label {
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    // Feedback messages
+    .invalid-feedback, .valid-feedback {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    // Botón de envío
+    .submit-button {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.6s ease;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(217, 67, 48, 0.4);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        transform: none;
+
+        &:hover {
+          transform: none;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+// =====================================================
+// INFORMACIÓN DE CONTACTO
+// =====================================================
+
+.contact-info-container {
+  .contact-info-card, .location-card, .schedule-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid rgba(217, 67, 48, 0.1);
+    transition: all 0.4s ease;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border-color: rgba(217, 67, 48, 0.3);
+    }
+  }
+
+  // Métodos de contacto
+  .contact-methods {
+    .contact-method {
+      background: rgba(249, 246, 241, 0.5);
+      border: 2px solid transparent;
+      transition: all 0.4s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(217, 67, 48, 0.05);
+        border-color: rgba(217, 67, 48, 0.2);
+        transform: translateX(10px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .method-icon {
+        transition: all 0.3s ease;
+
+        &.bg-primary-light {
+          background: linear-gradient(145deg, var(--color-primary-light), #fff);
+        }
+
+        &.bg-success-light {
+          background: linear-gradient(145deg, var(--color-success-light), #fff);
+        }
+
+        &.bg-warning-light {
+          background: linear-gradient(145deg, var(--color-warning-light), #fff);
+        }
+      }
+
+      &:hover .method-icon {
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+  }
+
+  // Información de ubicación
+  .location-info {
+    .address-info {
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(217, 67, 48, 0.05) !important;
+        transform: translateX(5px);
+      }
+    }
+
+    .references {
+      li {
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateX(10px);
+          color: var(--color-primary);
+        }
+      }
+    }
+  }
+
+  // Horarios
+  .schedule-list {
+    .schedule-item {
+      transition: all 0.3s ease;
+      padding: 1rem 0;
+
+      &:hover {
+        background: rgba(217, 67, 48, 0.05);
+        transform: translateX(10px);
+        padding-left: 1rem;
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+// =====================================================
+// CLASES DE UTILIDAD
+// =====================================================
+
+.bg-primary-light { background-color: var(--color-primary-light) !important; }
+.bg-success-light { background-color: var(--color-success-light) !important; }
+.bg-warning-light { background-color: var(--color-warning-light) !important; }
+.bg-danger-light { background-color: var(--color-danger-light) !important; }
+.bg-info-light { background-color: var(--color-info-light) !important; }
+
+.hover-effect {
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// =====================================================
+// ANIMACIONES
+// =====================================================
+
+@keyframes overlayPulse {
+  0%, 100% {
+    background: linear-gradient(
+      135deg,
+      rgba(217, 67, 48, 0.2) 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      rgba(74, 115, 76, 0.2) 100%
+    );
+  }
+  50% {
+    background: linear-gradient(
+      135deg,
+      rgba(217, 67, 48, 0.3) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(74, 115, 76, 0.3) 100%
+    );
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// =====================================================
+// RESPONSIVE DESIGN
+// =====================================================
+
+@media (max-width: 991.98px) {
+  .main-contact-section {
+    padding: 80px 0;
+  }
+
+  .contact-hero {
+    height: 50vh;
+
+    .hero-title {
+      font-size: 3rem;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .main-contact-section {
+    padding: 60px 0;
+  }
+
+  .contact-hero {
+    height: 45vh;
+
+    .hero-title {
+      font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+
+    .hero-badges {
+      .badge {
+        display: block;
+        margin: 0.5rem auto;
+        width: fit-content;
+      }
+    }
+  }
+
+  .contact-form-container {
+    margin-bottom: 3rem;
+  }
+
+  .contact-method {
+    margin-bottom: 1rem !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .contact-hero {
+    .hero-title {
+      font-size: 1.8rem;
+    }
+
+    .hero-badges {
+      .badge {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+  }
+
+  .contact-form {
+    padding: 2rem 1.5rem !important;
+  }
+}
+
+// Scroll suave
+html {
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,202 @@
+<div class="container py-5">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2 fw-bold text-primary mb-3">
+        <i class="bi bi-receipt"></i> Mis Pedidos
+      </h1>
+      <p class="text-muted">Revisa el estado de todos tus pedidos</p>
+    </div>
+  </div>
+
+  <!-- Estadísticas rápidas -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-receipt fs-3 text-primary"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Total Pedidos</h6>
+              <h3 class="mb-0 fw-bold">{{ totalPedidos() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-clock-history fs-3 text-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Pendientes</h6>
+              <h3 class="mb-0 fw-bold text-warning">{{ pedidosPendientes() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-info bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-arrow-repeat fs-3 text-info"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">En Proceso</h6>
+              <h3 class="mb-0 fw-bold text-info">{{ pedidosEnProceso() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-wrap gap-2">
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'todos' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="setFiltroEstado('todos')">
+          Todos
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'pendiente' ? 'btn-warning' : 'btn-outline-warning'"
+          (click)="setFiltroEstado('pendiente')">
+          ⏳ Pendientes
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'procesando' ? 'btn-info' : 'btn-outline-info'"
+          (click)="setFiltroEstado('procesando')">
+          🔄 En Proceso
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'enviado' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="setFiltroEstado('enviado')">
+          🚚 Enviados
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'entregado' ? 'btn-success' : 'btn-outline-success'"
+          (click)="setFiltroEstado('entregado')">
+          ✅ Entregados
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'cancelado' ? 'btn-danger' : 'btn-outline-danger'"
+          (click)="setFiltroEstado('cancelado')">
+          ❌ Cancelados
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3">Cargando pedidos...</p>
+    </div>
+  }
+
+  <!-- Lista de pedidos -->
+  @if (!cargando()) {
+    @if (pedidosFiltrados().length > 0) {
+      <div class="row g-4">
+        @for (pedido of pedidosFiltrados(); track pedido.id_pedido) {
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 hover-shadow">
+              <div class="card-body">
+                <!-- Header del pedido -->
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h5 class="card-title mb-1 fw-bold">
+                      {{ getEstadoIcono(pedido.estado_pedido) }} Pedido #{{ pedido.id_pedido }}
+                    </h5>
+                    <p class="text-muted small mb-0">
+                      <i class="bi bi-calendar3"></i> {{ formatearFecha(pedido.fecha_pedido) }}
+                    </p>
+                  </div>
+                  <span class="badge {{ getEstadoClass(pedido.estado_pedido) }} px-3 py-2">
+                    {{ pedido.estado_pedido }}
+                  </span>
+                </div>
+
+                <!-- Información del pedido -->
+                <div class="border-top pt-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted">Total:</span>
+                    <span class="h5 mb-0 text-success fw-bold">${{ pedido.total?.toFixed(2) }}</span>
+                  </div>
+                </div>
+
+                <!-- Timeline del pedido -->
+                <div class="border-top pt-3 mt-3">
+                  <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-center" [class.text-success]="pedido.estado_pedido === 'pendiente' || pedido.estado_pedido === 'procesando' || pedido.estado_pedido === 'enviado' || pedido.estado_pedido === 'entregado'">
+                      <i class="bi bi-clock fs-5"></i>
+                      <div class="mt-1">Pendiente</div>
+                    </div>
+                    <div class="flex-grow-1 mx-2" style="height: 2px; background: #dee2e6;"></div>
+                    <div class="text-center" [class.text-success]="pedido.estado_pedido === 'procesando' || pedido.estado_pedido === 'enviado' || pedido.estado_pedido === 'entregado'">
+                      <i class="bi bi-arrow-repeat fs-5"></i>
+                      <div class="mt-1">Procesando</div>
+                    </div>
+                    <div class="flex-grow-1 mx-2" style="height: 2px; background: #dee2e6;"></div>
+                    <div class="text-center" [class.text-success]="pedido.estado_pedido === 'enviado' || pedido.estado_pedido === 'entregado'">
+                      <i class="bi bi-truck fs-5"></i>
+                      <div class="mt-1">Enviado</div>
+                    </div>
+                    <div class="flex-grow-1 mx-2" style="height: 2px; background: #dee2e6;"></div>
+                    <div class="text-center" [class.text-success]="pedido.estado_pedido === 'entregado'">
+                      <i class="bi bi-check-circle fs-5"></i>
+                      <div class="mt-1">Entregado</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botón ver detalle -->
+                <div class="mt-3">
+                  <button class="btn btn-outline-primary w-100" (click)="verDetallePedido(pedido)">
+                    <i class="bi bi-eye"></i> Ver Detalle
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Sin pedidos -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
+          <h5 class="text-muted">No se encontraron pedidos</h5>
+          <p class="text-muted mb-4">
+            @if (filtroEstado() === 'todos') {
+              Aún no has realizado ningún pedido.
+            } @else {
+              No tienes pedidos con el estado: <strong>{{ filtroEstado() }}</strong>
+            }
+          </p>
+          <a class="btn btn-primary" routerLink="/plataforma/productos">
+            <i class="bi bi-cart-plus"></i> Hacer un Pedido
+          </a>
+        </div>
+      </div>
+    }
+  }
+</div>

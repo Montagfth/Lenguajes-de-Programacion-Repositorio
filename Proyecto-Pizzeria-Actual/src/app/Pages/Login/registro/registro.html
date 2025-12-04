@@ -1,0 +1,174 @@
+<div class="login-container min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="login-wrapper shadow-lg overflow-hidden rounded-4">
+    <div class="row g-0 h-100">
+      <!-- Left Side: Image & Branding -->
+      <div class="col-lg-5 d-none d-lg-flex flex-column align-items-center justify-content-center bg-image text-white p-5 position-relative">
+        <div class="overlay"></div>
+        <div class="content position-relative z-2 text-center">
+          <h1 class="display-4 fw-bold mb-3 title-font">Únete a la Familia</h1>
+          <p class="lead mb-4">Regístrate y disfruta de las mejores pizzas de la ciudad.</p>
+          <div class="d-flex flex-column gap-3 text-start w-100 px-4">
+            <div class="d-flex align-items-center">
+              <div class="icon-box bg-white text-primary rounded-circle p-2 me-3">
+                <i class="bi bi-gift fs-4"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold">Promociones Exclusivas</h6>
+                <small class="text-white-50">Acceso a ofertas solo para miembros</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="icon-box bg-white text-primary rounded-circle p-2 me-3">
+                <i class="bi bi-speedometer2 fs-4"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold">Pedidos Rápidos</h6>
+                <small class="text-white-50">Guarda tus direcciones y favoritos</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Register Form -->
+      <div class="col-lg-7 bg-white d-flex align-items-center">
+        <div class="card-body p-4 p-md-5">
+          <div class="text-center mb-4">
+            <div class="d-lg-none mb-3">
+              <h1 class="h3 fw-bold text-primary title-font">Pizzería Deliziosa</h1>
+            </div>
+            <h2 class="h4 fw-bold text-dark">Crear Cuenta</h2>
+            <p class="text-muted">Completa tus datos para empezar</p>
+          </div>
+
+          <form>
+            <div class="row g-3">
+              <!-- Nombre -->
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    placeholder="Nombre Completo"
+                    [(ngModel)]="nombre"
+                    name="nombre"
+                    [class.is-valid]="nombre() && isNombreValid()"
+                    [class.is-invalid]="nombre() && !isNombreValid()"
+                    [disabled]="cargando()"
+                  />
+                  <label for="nombre"><i class="bi bi-person me-2"></i>Nombre Completo</label>
+                </div>
+                @if (nombre() && !isNombreValid()) {
+                  <div class="text-danger small mt-1 ms-2">El nombre debe tener al menos 3 caracteres</div>
+                }
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="name@example.com"
+                    [(ngModel)]="email"
+                    name="email"
+                    [class.is-valid]="email() && isEmailValid()"
+                    [class.is-invalid]="email() && !isEmailValid()"
+                    [disabled]="cargando()"
+                  />
+                  <label for="email"><i class="bi bi-envelope me-2"></i>Correo</label>
+                </div>
+                @if (email() && !isEmailValid()) {
+                  <div class="text-danger small mt-1 ms-2">Ingresa un correo válido</div>
+                }
+              </div>
+
+              <!-- Teléfono -->
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="telefono"
+                    placeholder="Teléfono"
+                    [(ngModel)]="telefono"
+                    name="telefono"
+                    [class.is-valid]="telefono() && isTelefonoValid()"
+                    [class.is-invalid]="telefono() && !isTelefonoValid()"
+                    [disabled]="cargando()"
+                  />
+                  <label for="telefono"><i class="bi bi-phone me-2"></i>Teléfono</label>
+                </div>
+                @if (telefono() && !isTelefonoValid()) {
+                  <div class="text-danger small mt-1 ms-2">Mínimo 9 dígitos</div>
+                }
+              </div>
+
+              <!-- Dirección -->
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="direccion"
+                    placeholder="Dirección"
+                    [(ngModel)]="direccion"
+                    name="direccion"
+                    [disabled]="cargando()"
+                  />
+                  <label for="direccion"><i class="bi bi-geo-alt me-2"></i>Dirección (Opcional)</label>
+                </div>
+              </div>
+
+              <!-- Contraseña -->
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Contraseña"
+                    [(ngModel)]="password"
+                    name="password"
+                    [class.is-valid]="password() && isPasswordValid()"
+                    [class.is-invalid]="password() && !isPasswordValid()"
+                    [disabled]="cargando()"
+                  />
+                  <label for="password"><i class="bi bi-lock me-2"></i>Contraseña</label>
+                </div>
+                @if (password() && !isPasswordValid()) {
+                  <div class="text-danger small mt-1 ms-2">Mínimo 6 caracteres</div>
+                }
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm fw-bold"
+                (click)="registrarse()"
+                [disabled]="!isFormValid() || cargando()"
+              >
+                @if (!cargando()) {
+                  REGISTRARSE
+                } @else {
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                  Creando cuenta...
+                }
+              </button>
+            </div>
+
+            <div class="text-center mt-4">
+              <p class="text-muted mb-0">
+                ¿Ya tienes una cuenta?
+                <a routerLink="/login" class="text-primary fw-bold text-decoration-none">Inicia Sesión</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

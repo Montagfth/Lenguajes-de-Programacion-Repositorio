@@ -1,0 +1,218 @@
+<div class="container py-5">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2 fw-bold text-primary mb-3">
+        <i class="bi bi-calendar-check"></i> Mis Reservas
+      </h1>
+      <p class="text-muted">Gestiona todas tus reservas en nuestros locales</p>
+    </div>
+  </div>
+
+  <!-- Estadísticas rápidas -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-calendar-check fs-3 text-primary"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Total Reservas</h6>
+              <h3 class="mb-0 fw-bold">{{ totalReservas() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-clock-history fs-3 text-warning"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Pendientes</h6>
+              <h3 class="mb-0 fw-bold text-warning">{{ reservasPendientes() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-success bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-check-circle fs-3 text-success"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h6 class="text-muted mb-1">Confirmadas</h6>
+              <h3 class="mb-0 fw-bold text-success">{{ reservasConfirmadas() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-wrap gap-2">
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'todos' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="setFiltroEstado('todos')">
+          Todas
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'pendiente' ? 'btn-warning' : 'btn-outline-warning'"
+          (click)="setFiltroEstado('pendiente')">
+          ⏳ Pendientes
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'confirmada' ? 'btn-success' : 'btn-outline-success'"
+          (click)="setFiltroEstado('confirmada')">
+          ✅ Confirmadas
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'completada' ? 'btn-secondary' : 'btn-outline-secondary'"
+          (click)="setFiltroEstado('completada')">
+          🎉 Completadas
+        </button>
+        <button
+          class="btn"
+          [class]="filtroEstado() === 'cancelada' ? 'btn-danger' : 'btn-outline-danger'"
+          (click)="setFiltroEstado('cancelada')">
+          ❌ Canceladas
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3">Cargando reservas...</p>
+    </div>
+  }
+
+  <!-- Lista de reservas -->
+  @if (!cargando()) {
+    @if (reservasFiltradas().length > 0) {
+      <div class="row g-4">
+        @for (reserva of reservasFiltradas(); track reserva.id_reserva) {
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 hover-shadow">
+              <div class="card-body">
+                <!-- Header de la reserva -->
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h5 class="card-title mb-1 fw-bold">
+                      {{ getEstadoIcono(reserva.estado) }} Reserva #{{ reserva.id_reserva }}
+                    </h5>
+                    <p class="text-muted small mb-0">
+                      <i class="bi bi-calendar3"></i> {{ formatearFecha(reserva.fecha_reserva) }}
+                    </p>
+                  </div>
+                  <span class="badge {{ getEstadoClass(reserva.estado) }} px-3 py-2">
+                    {{ reserva.estado }}
+                  </span>
+                </div>
+
+                <!-- Información de la reserva -->
+                <div class="border-top pt-3">
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-clock text-primary me-2"></i>
+                        <div>
+                          <small class="text-muted d-block">Hora</small>
+                          <strong>{{ formatearHora(reserva.hora_reserva) }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-people text-primary me-2"></i>
+                        <div>
+                          <small class="text-muted d-block">Personas</small>
+                          <strong>{{ reserva.cant_personas }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Local y Evento -->
+                <div class="border-top pt-3 mt-3">
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-geo-alt text-danger me-2"></i>
+                        <div>
+                          <small class="text-muted d-block">Local</small>
+                          <strong>Local #{{ reserva.fk_id_local }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    @if (reserva.fk_id_evento) {
+                      <div class="col-12 mt-2">
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-calendar-event text-success me-2"></i>
+                          <div>
+                            <small class="text-muted d-block">Evento</small>
+                            <strong>Evento #{{ reserva.fk_id_evento }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="mt-3 d-flex gap-2">
+                  <button class="btn btn-outline-primary flex-fill" (click)="verDetalleReserva(reserva)">
+                    <i class="bi bi-eye"></i> Ver Detalle
+                  </button>
+                  @if (reserva.estado === 'pendiente' || reserva.estado === 'confirmada') {
+                    <button class="btn btn-outline-danger" (click)="cancelarReserva(reserva)">
+                      <i class="bi bi-x-circle"></i>
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Sin reservas -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-calendar-x fs-1 text-muted mb-3"></i>
+          <h5 class="text-muted">No se encontraron reservas</h5>
+          <p class="text-muted mb-4">
+            @if (filtroEstado() === 'todos') {
+              Aún no has realizado ninguna reserva.
+            } @else {
+              No tienes reservas con el estado: <strong>{{ filtroEstado() }}</strong>
+            }
+          </p>
+          <a class="btn btn-primary" routerLink="/plataforma/locales">
+            <i class="bi bi-calendar-plus"></i> Hacer una Reserva
+          </a>
+        </div>
+      </div>
+    }
+  }
+</div>
